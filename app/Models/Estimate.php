@@ -4,12 +4,13 @@ namespace App\Models;
 
 use App\Models\Setting;
 use App\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Estimate extends Model
 {
-    use SoftDeletes, HasUUID;
+    use SoftDeletes, HasUUID, hasFactory;
 
     protected $fillable = [
         'name',
@@ -44,7 +45,7 @@ class Estimate extends Model
     public function scopeSearch($query, $search)
     {
         return $query->where('name', 'like', "%{$search}%");
-    } 
+    }
 
     public function getLogoImageAttribute()
     {
@@ -56,7 +57,7 @@ class Estimate extends Model
 
         return null;
     }
-    
+
     public function getShareUrlAttribute()
     {
         return route('estimates.view', $this);
@@ -89,7 +90,7 @@ class Estimate extends Model
                 $section->position = $position;
                 $section->save();
             }
-        }        
+        }
     }
 
     public function duplicate()
@@ -100,7 +101,7 @@ class Estimate extends Model
 
         $estimateData['name'] = $estimateData['name'] . ' Copy';
         $duplicated = Estimate::create($estimateData);
-        
+
         $this->copySectionsTo($duplicated);
 
         return $duplicated;
@@ -133,7 +134,7 @@ class Estimate extends Model
     protected function treatDataForDuplication(array $data)
     {
         $removeKeys = ['id', 'created_at', 'updated_at', 'password'];
-        
+
         return array_diff_key($data, array_flip($removeKeys));
     }
 }

@@ -1,8 +1,11 @@
 <?php
+namespace Database\Factories;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Models\Item;
+use App\Models\Section;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
@@ -16,12 +19,28 @@ use Faker\Generator as Faker;
 | model instances for testing / seeding your application's database.
 |
 */
+Class ItemFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Item::class;
 
-$factory->define(Item::class, function (Faker $faker) {
-    return [
-        'description' => Str::title($faker->sentence(5)),
-        'duration' => null,
-        'price' => rand(199,599),
-        'obligatory' => false,
-    ];
-});
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'description' => Str::title($this->faker->sentence(5)),
+            'duration' => null,
+            'price' => rand(199,599),
+            'obligatory' => false,
+        ];
+    }
+}
+

@@ -1,6 +1,8 @@
 <?php
+namespace Database\Seeders;
 
 use App\Models\User;
+use Database\Seeders\AdminUserSeeder;
 use Illuminate\Database\Seeder;
 
 class UsersSeeder extends Seeder
@@ -12,7 +14,7 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-        if(app()->environment() == 'local') {
+        if(app()->environment() === 'local') {
             $this->call(AdminUserSeeder::class);
         }
     }

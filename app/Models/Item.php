@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
 {
-    use HasUUID;
-    
+    use HasUUID, hasFactory;
+
     protected $fillable = [
         'description',
         'duration',

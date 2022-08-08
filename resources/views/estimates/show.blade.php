@@ -20,7 +20,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         html, body {
             background-color: #fff;
@@ -31,7 +31,7 @@
 </head>
 <body>
     <div id="app">
-        <estimate-viewer-component 
+        <estimate-viewer-component
             estimate="{{ $estimate->id }}"
             :can-share-email="{{ isset($canShareEmail) ? json_encode($canShareEmail) : 'false'}}"
         ></estimate-viewer-component>

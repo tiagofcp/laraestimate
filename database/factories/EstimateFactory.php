@@ -1,8 +1,11 @@
 <?php
+namespace Database\Factories;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Models\Estimate;
+use App\Models\Item;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
@@ -16,11 +19,27 @@ use Faker\Generator as Faker;
 | model instances for testing / seeding your application's database.
 |
 */
+Class EstimateFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Estimate::class;
 
-$factory->define(Estimate::class, function (Faker $faker) {
-    return [
-        'name' => Str::title($faker->sentence(3)),
-        'expiration_date' => $faker->date(),
-        'allows_to_select_items' => $faker->boolean(),
-    ];
-});
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'name' => Str::title($this->faker->sentence(3)),
+            'expiration_date' => $this->faker->date(),
+            'allows_to_select_items' => $this->faker->boolean(),
+        ];
+    }
+}
+
