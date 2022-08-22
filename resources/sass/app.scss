@@ -13,8 +13,14 @@
 
 @import './animate';
 
+
 body {
-    font-size: 1.1rem;
+    font-size: 1.4rem;
+}
+
+p{
+    margin-top: 10px;
+    font-size: $font-size-base-normal;
 }
 
 .breadcrumb {
@@ -37,3 +43,121 @@ body {
     -moz-border-radius: 0px !important;
     border-radius: 0px !important; 
 }
+
+td {
+    font-size: 0.75em;
+    max-width: 380px;
+  }
+
+  .table th, .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+
+
+  .btn-primary {
+    color: #fff;
+    background-color: #58a8dc;
+    border-color: #58a8dc;
+  }
+  
+  .btn-primary:hover {
+    color: #fff;
+    background-color: #407aa0;
+    border-color: #407aa0;
+  }
+  
+  .btn-primary:focus,
+  .btn-primary.focus {
+    color: #fff;
+    background-color: #1f1c33;
+    border-color: rgb(31, 28, 51);
+    box-shadow: 0 0 0 0.2rem rgba(31, 28, 51, 0.5);
+  }
+  
+  .btn-primary.disabled,
+  .btn-primary:disabled {
+    color: #fff;
+    background-color: #58a8dc;
+    border-color: #58a8dc;
+  }
+
+  .text-primary {
+    color: #58a8dc !important;
+  }
+  
+  a.text-primary:hover,
+  a.text-primary:focus {
+    color: #1f1c33 !important;
+  }
+
+  @media print {
+    .d-print-none {
+      -webkit-print-color-adjust: exact; 
+      print-color-adjust: exact;
+      display: none !important;
+    }
+  
+    .d-print-inline {
+      -webkit-print-color-adjust: exact; 
+      print-color-adjust: exact;
+      display: inline !important;
+    }
+  
+    .d-print-inline-block {
+      -webkit-print-color-adjust: exact; 
+      print-color-adjust: exact;
+      display: inline-block !important;
+    }
+  
+    .d-print-block {
+      -webkit-print-color-adjust: exact; 
+      print-color-adjust: exact;
+      display: block !important;
+    }
+  
+    .d-print-table {
+      -webkit-print-color-adjust: exact; 
+      print-color-adjust: exact;
+      display: table !important;
+    }
+  
+    .d-print-table-row {
+      -webkit-print-color-adjust: exact; 
+      print-color-adjust: exact;
+      display: table-row !important;
+    }
+  
+    .d-print-table-cell {
+      -webkit-print-color-adjust: exact; 
+      print-color-adjust: exact;
+      display: table-cell !important;
+    }
+  
+    .d-print-flex {
+      -webkit-print-color-adjust: exact; 
+      print-color-adjust: exact;
+      display: flex !important;
+    }
+  
+    .d-print-inline-flex {
+      display: inline-flex !important;
+    }
+
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+
+    .table th, .table td {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    
+  }
+
+

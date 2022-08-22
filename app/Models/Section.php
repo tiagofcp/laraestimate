@@ -13,6 +13,7 @@ class Section extends Model
     protected $fillable = [
         'text',
         'type',
+        'period',
     ];
 
     protected $appends = [

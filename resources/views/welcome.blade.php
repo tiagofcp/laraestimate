@@ -51,7 +51,7 @@
             .links > a {
                 color: #636b6f;
                 padding: 0 25px;
-                font-size: 13px;
+                font-size: 1.4rem;
                 font-weight: 600;
                 letter-spacing: .1rem;
                 text-decoration: none;
@@ -60,6 +60,7 @@
 
             .m-b-md {
                 margin-bottom: 30px;
+                font-size: 1.4rem;
             }
 
             .footer {
@@ -68,6 +69,7 @@
                 position: fixed;
                 bottom: 0;
                 left: 0;
+                font-size: 1.4rem;
                 text-align: center;
             }
 
@@ -87,7 +89,7 @@
         </style>
     </head>
     <body>
-        <a href="https://setup.technology/contactos-setup-tech" style="position: fixed;z-index: 9999;"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_left_darkblue_121621.png?resize=149%2C149" class="attachment-full size-full" alt="Precisas de ajuda?" data-recalc-dims="1"></a>
+        <a href="https://setup.technology/contactos-setup-tech" style="position: fixed;z-index: 9999;"><img width="500" height="500" src="/images/bannerHome.png" class="attachment-full size-full" alt="Precisas de ajuda?" data-recalc-dims="1"></a>
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
@@ -101,7 +103,7 @@
 
             <div class="content">
                 <div class="m-b-md">
-                    <img src="{{ asset('/images/logo.png') }}" alt="LaraEstimate Logo Image" height="40px">
+                    <img src="{{ asset('/images/logo.png') }}" alt="LaraEstimate Logo Image" height="250px">
                 </div>
 
                 <div class="m-b-md">

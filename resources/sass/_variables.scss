@@ -2,9 +2,13 @@
 $body-bg: #f8fafc;
 
 // Typography
-$font-family-sans-serif: 'Nunito', sans-serif;
-$font-size-base: 0.9rem;
+$font-family-sans-serif: 'Encode Sans', sans-serif;
+$font-size-base-normal: 1rem;
+$font-size-base-title: 1.4rem;
+$font-size-base-iva: 0.6rem;
+
 $line-height-base: 1.6;
+
 
 // Colors
 $blue: #3498db;
@@ -19,5 +23,7 @@ $teal: #4dc0b5;
 $cyan: #6cb2eb;
 $turquoise: #1abc9c;
 
-$primary:       $turquoise !default;
-$secondary:     #2f3542 !default;
+$primary: #58a8dc !default;
+$secondary: #1f1c33 !default;
+
+

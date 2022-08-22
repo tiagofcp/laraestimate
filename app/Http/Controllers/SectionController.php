@@ -18,7 +18,7 @@ class SectionController extends Controller
 
     public function store(SectionStoreRequest $request, Estimate $estimate)
     {
-        $data = $request->only(['text', 'type']);
+        $data = $request->only(['text', 'type', 'period']);
 
         $section = $estimate->sections()->create($data);
 
@@ -30,7 +30,7 @@ class SectionController extends Controller
 
     public function update(SectionUpdateRequest $request, Estimate $estimate, Section $section)
     {
-        $data = $request->only(['text']);
+        $data = $request->only(['text', 'period']);
 
         $section->update($data);
 

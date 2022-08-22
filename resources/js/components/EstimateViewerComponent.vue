@@ -1,4 +1,9 @@
+
+
 <style>
+
+@import '/laravel/laraestimate/resources/sass/_variables.scss';
+
     .fixed-buttons {
         position: fixed;
         top: 0;
@@ -14,7 +19,8 @@
 
     #estimateMainSection h1 {
         text-align: left !important;
-        font-size: 1.5rem;
+        color: #58a8dc !important;
+        font-size: 1.4rem;
     }
 
     #estimateMainSection tr.item:not(.selected) {
@@ -26,6 +32,55 @@
         width: 1.5em;
         height: 1.5em;
     }
+
+    .iva-text {
+        font-size: 0.6rem !important;
+        display: inline !important;
+        color: white !important;
+        text-align: center !important;
+        font-weight: bold !important;
+        
+      }
+    .total_section {
+        font-size: 1em;
+        font-weight: bold !important;
+        background: #58a8dc !important;
+        color: white;
+        padding: 5px 10px; 
+        margin-left: -50px;
+        
+}
+
+    
+
+    #estimateMainSection .text-right b, 
+    #estimateMainSection .text-right strong {
+        color: #1f1c33 !important;
+        font-size: 1rem;
+    }
+
+    #estimateMainSection ul {
+
+        position: relative;
+
+    }
+
+
+    #estimateMainSection li::before{
+
+        content: "";
+        background-size: 20px;
+        background-image: url(/images/bullet.png?27c3d9704632b4ee09b8a7af2728f933) !important;
+        display: inline-block !important;
+        padding-right: 5px !important;
+        position: relative !important;
+        background-repeat: no-repeat;
+        height: 17px;
+        width: 25px;
+
+    }
+
+
 </style>
 
 <template>
@@ -98,19 +153,21 @@
                     <p class="absolute left-[432px] top-[763px] text-base font-bold text-left text-[#ee754e]">
                         Branding
                     </p>
-                    <p class="absolute left-[746px] top-[763px] text-base font-bold text-left text-[#d853ee]">
+                    <p class="absolute left-[761px] top-[763px] text-base font-bold text-left text-[#d853ee]">
                         Multimédia
                     </p>
-                    <p class="absolute left-[65px] top-[1054px] text-base font-bold text-left text-[#5ba646]">
+                    <p class="absolute left-[65px] top-[1065px] text-base font-bold text-left text-[#5ba646]">
                         Marketing Digital
                     </p>
-                    <p class="absolute left-[412px] top-[1055px] text-base font-bold text-left text-[#6c4b9b]">
+                    <p class="absolute left-[412px] top-[1065px] text-base font-bold text-left text-[#6c4b9b]">
                         Comunicação
                     </p>
-                    <p class="absolute left-[774px] top-[1055px] text-base font-bold text-left text-[#38692b]">CRO</p>
+                    <p class="absolute left-[784px] top-[1065px] text-base font-bold text-left text-[#38692b]">
+                        CRO
+                    </p>
                     <svg
-                        width="206"
-                        height="111"
+                        width="150"
+                        height="81"
                         viewBox="0 0 206 111"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
@@ -220,7 +277,7 @@
                     viewBox="0 0 54 49"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="absolute left-[762px] top-[689px]"
+                    class="absolute left-[775px] top-[689px]"
                     preserveAspectRatio="none"
                 >
                     <path
@@ -240,7 +297,7 @@
                     viewBox="0 0 54 49"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="absolute left-[104px] top-[985px]"
+                    class="absolute left-[104px] top-[995px]"
                     preserveAspectRatio="none"
                 >
                     <path
@@ -259,7 +316,7 @@
                     viewBox="0 0 54 49"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="absolute left-[434px] top-[985px]"
+                    class="absolute left-[434px] top-[995px]"
                     preserveAspectRatio="none"
                 >
                     <path
@@ -278,7 +335,7 @@
                     viewBox="0 0 54 49"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="absolute left-[762px] top-[985px]"
+                    class="absolute left-[775px] top-[995px]"
                     preserveAspectRatio="none"
                 >
                     <path
@@ -366,15 +423,21 @@
                             www.setuptech.pt
                         </p>
                     </div>
-                    <p class="w-[212px] h-[131px] absolute left-11 top-[812px] text-base text-left text-black">
+                    <p class="w-[212px] h-[131px] absolute left-12 top-[812px] text-base text-left text-black">
                         Sejam apps móveis, software personalizado ou websites: criamos o software perfeito para o seu
                         negócio.
                     </p>
                     <p class="w-[200px] h-[147px] absolute left-[375px] top-[812px] text-base text-left text-black">
                         Investir em Branding é investir em resultados para o seu negócio. Somos especialistas em cuidar
-                        da imagem das empresas que querem ir mais além.Branding
+                        da imagem das empresas que querem ir mais além.
                     </p>
-                    <svg
+
+                    <p class="w-[200px] h-[140px] absolute left-[710px] top-[804px] text-base text-left text-black">
+                        Transformamos ideias em design. Cobrimos todas as necessidades audiovisuais da sua empresa, e apresentamos-lhe soluções
+                        criativas que marcam a diferença.
+                    </p>
+
+                    <!--<svg
                         width="208"
                         height="140"
                         viewBox="0 0 208 140"
@@ -382,7 +445,8 @@
                         xmlns="http://www.w3.org/2000/svg"
                         class="absolute left-[706px] top-[811px]"
                         preserveAspectRatio="none"
-                    >
+                    >-->
+                    
                         <path
                             d="M4.05315 13.4326V2.43857H0V1.28086H9.43817V2.43857H5.38502V13.4326H4.05315Z"
                             fill="black"
@@ -910,7 +974,7 @@
                             d="M68.2778 136.699C67.9928 136.699 67.7626 136.617 67.5872 136.453C67.4173 136.289 67.3324 136.067 67.3324 135.788C67.3324 135.509 67.4173 135.287 67.5872 135.123C67.7571 134.959 67.9873 134.877 68.2778 134.877C68.5628 134.877 68.7903 134.961 68.9602 135.131C69.1356 135.295 69.2233 135.514 69.2233 135.788C69.2233 136.062 69.1356 136.283 68.9602 136.453C68.7848 136.617 68.5574 136.699 68.2778 136.699Z"
                             fill="black"
                         ></path>
-                    </svg>
+                    
                     <p class="w-[228px] h-[163px] absolute left-11 top-[1102px] text-base text-left text-black">
                         Da estratégia à implementação, somos uma agência de marketing digital que oferece soluções
                         completas de marketing, pensadas e personalizadas de acordo com as necessidades de cada cliente.
@@ -922,7 +986,7 @@
                     </p>
                     <p class="w-[251px] h-[134px] absolute left-[375px] top-[1117px] text-base text-left text-black">
                         O nosso objetivo é fortalecer a sua comunicação corporativa com criatividade e inovação. Damos
-                        voz à sua marca, de forma a que a sua mensagem não fique perdida entrelinhas.Comunicação
+                        voz à sua marca, de forma a que a sua mensagem não fique perdida entrelinhas.
                     </p>
                 </div>
                 </div>
@@ -934,7 +998,7 @@
 
                     <section class="mb-5" v-if="estimateData.use_name_as_title">
                         <h1><b>{{ estimateData.name }}</b></h1>
-                    </section>
+                    </section> 
 
                     <section class="mb-5" v-for="section in estimateData.sections" :key="section.id">
                         <p v-html="section.presentable_text"></p>
@@ -951,15 +1015,17 @@
                                 <tr v-for="item in section.items" :key="item.id" class="item" :class="{'selected': item.selected}">
                                     <td><input class="check-item" type="checkbox" v-if="!item.obligatory" v-model="item.selected" @change="renderPrices()"></td>
                                     <td>{{ item.description || '-' }}</td>
-                                    <td>{{ item.duration || '-' }}</td>
+                                    <!--<td>{{ item.duration || '-' }}</td> -->
                                     <td class="text-right">{{ formattedPrice(item.price) || '-' }}</td>
                                 </tr>
 
                                 <tr>
                                     <td colspan="3" class="text-right"><b>{{ trans.get('app.section_total') }}:</b></td>
-                                    <td class="text-right">{{ formattedPrice(sectionTotal(section)) }}</td>
+                                    <td class="text-right"><span class="total_section">{{ formattedPrice(sectionTotal(section))}}<span class="iva-text"> + IVA/{{ section.type }}</span></span></td>      
                                 </tr>
+                                
                             </table>
+                            
                         </div>
                     </section>
                 </div>
