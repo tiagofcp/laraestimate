@@ -70,7 +70,11 @@
 
         content: "";
         background-size: 20px;
-        background-image: url(/images/bullet.png?27c3d9704632b4ee09b8a7af2728f933) !important;
+        /*background-image: url("<svg xmlns='http://www.w3.org/2000/svg' width='171' height='42' viewBox='0 0 171 42' preserveAspectRatio='none'><path d='M8.77301 35.9251C8.34276 34.4794 7.2241 33.3435 5.79567 32.8961L0.994054 31.6397C-0.313912 31.2955 -0.331122 30.6588 0.942424 30.2285L14.6761 25.6506C15.9324 25.2204 16.638 25.9088 16.1906 27.1995L11.3373 40.7955C10.8726 42.0518 10.2531 42.0518 9.92609 40.7266L8.77301 35.9595V35.9251Z' fill='#376887'/></svg>");
+        */
+
+        background-image: url(/images/bullet.png?27c3d9704632b4ee09b8a7af2728f933);
+
         display: inline-block !important;
         padding-right: 5px !important;
         position: relative !important;

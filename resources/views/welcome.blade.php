@@ -89,7 +89,7 @@
         </style>
     </head>
     <body>
-        <a href="https://setup.technology/contactos-setup-tech" style="position: fixed;z-index: 9999;"><img width="500" height="500" src="/images/bannerHome.png" class="attachment-full size-full" alt="Precisas de ajuda?" data-recalc-dims="1"></a>
+        <a href="https://setup.technology/contactos-setup-tech" style="position: fixed;z-index: 9999;"><img width="400" height="400" src="/images/bannerHome.png" class="attachment-full size-full" alt="Precisas de ajuda?" data-recalc-dims="1"></a>
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
@@ -107,7 +107,7 @@
                 </div>
 
                 <div class="m-b-md">
-                    Orçamentos para prodtos digitais
+                    Orçamentos para produtos digitais
                 </div>
 
                 <div class="footer">

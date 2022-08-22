@@ -27,7 +27,8 @@ class PreviewEstimatesSeeder extends Seeder
 
             $pricesSectionData = factory(Section::class)->make([
                 'text' => '<b>Price Section</b><br>Here in the price section, it is possible to add mandatory items or not.',
-                'type' => 'prices'
+                'type' => 'prices',
+                'period' => 'period'
             ])->toArray();
             unset($pricesSectionData['presentable_text']);
 
@@ -83,7 +84,8 @@ class PreviewEstimatesSeeder extends Seeder
 
             $pricesSectionData = factory(Section::class)->make([
                 'text' => '<b>Another Price Section</b><br>You can add as many price sections as you like. Let\'s see the selected price (*TOTAL_SELECTED_PRICE*) changing',
-                'type' => 'prices'
+                'type' => 'prices',
+                'period' => 'period'
             ])->toArray();
             unset($pricesSectionData['presentable_text']);
 

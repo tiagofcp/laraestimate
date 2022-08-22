@@ -23,7 +23,8 @@ class EstimatesSeeder extends Seeder
                 $estimate->sections()->create($textSectionData);
 
                 $pricesSectionData = Section::factory()->make([
-                    'type' => 'prices'
+                    'type' => 'prices',
+                    'period' => 'period'
                 ])->toArray();
                 unset($pricesSectionData['presentable_text']);
 
