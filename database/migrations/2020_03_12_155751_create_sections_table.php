@@ -18,7 +18,8 @@ class CreateSectionsTable extends Migration
 
             $table->text('text')->nullable();
             $table->enum('type', ['text', 'contact', 'prices']);
-
+            $table->text('period')->nullable();
+            
             $table->smallInteger('position')->unsigned()->default(0);
 
             $table->char('estimate_id', 36);

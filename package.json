@@ -25,9 +25,12 @@
         "webpack-livereload-plugin": "^1.2.0"
     },
     "dependencies": {
+        "-": "^0.0.1",
         "animate.css": "^3.7.2",
         "bootbox": "^5.4.0",
+        "g": "^2.0.1",
         "lang.js": "^1.1.14",
+        "npm": "^8.18.0",
         "toastr": "^2.1.4",
         "trumbowyg": "^2.21.0",
         "vue-trix": "^1.1.9",

@@ -38,6 +38,7 @@ Class SectionFactory extends Factory
         return [
             'text' => Str::title($this->faker->sentence(20)),
             'type' => 'text',
+            'period' => 'period',
         ];
     }
 }

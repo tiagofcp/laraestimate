@@ -1023,7 +1023,7 @@
 
                                 <tr>
                                     <td colspan="3" class="text-right"><b>{{ trans.get('app.section_total') }}:</b></td>
-                                    <td class="text-right"><span class="total_section">{{ formattedPrice(sectionTotal(section))}}<span class="iva-text"> + IVA/{{ section.period }}</span></span></td>      
+                                    <td class="text-right"><span class="total_section">{{ formattedPrice(sectionTotal(section))}}<span class="iva-text"> + IVA<span v-if="section.period!=='DV' ">/{{section.period }}</span></span></span></td>      
                                 </tr>
                                 
                             </table>
