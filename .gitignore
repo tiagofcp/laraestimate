@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
+composer.lock
 .env
 .env.backup
 .env.dusk.local
@@ -11,3 +12,4 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+

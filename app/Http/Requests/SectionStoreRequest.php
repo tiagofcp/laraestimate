@@ -26,6 +26,7 @@ class SectionStoreRequest extends FormRequest
         return [
             'text' => 'nullable|string',
             'type' => 'required|string',
+            'period' => 'nullable|string',
             'items' => 'nullable|array',
             'items.*.description' => 'nullable|string',
             'items.*.duration' => 'nullable|string',

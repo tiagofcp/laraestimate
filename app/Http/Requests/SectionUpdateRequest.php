@@ -25,6 +25,7 @@ class SectionUpdateRequest extends FormRequest
     {
         return [
             'text' => 'nullable|string',
+            'period' => 'nullable|string',
             'items' => 'nullable|array',
             'items.*.description' => 'nullable|string',
             'items.*.duration' => 'nullable|string',

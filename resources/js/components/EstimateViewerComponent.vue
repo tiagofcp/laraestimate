@@ -1008,20 +1008,22 @@
                                 <tr>
                                     <th></th>
                                     <th>{{ trans.get('app.description') }}</th>
-                                    <th>{{ trans.get('app.duration') }}</th>
+                                    <th></th>
+                                    <!--<th>{{ trans.get('app.duration') }}</th> -->
                                     <th class="text-right">{{ trans.get('app.price') }}</th>
                                 </tr>
 
                                 <tr v-for="item in section.items" :key="item.id" class="item" :class="{'selected': item.selected}">
                                     <td><input class="check-item" type="checkbox" v-if="!item.obligatory" v-model="item.selected" @change="renderPrices()"></td>
                                     <td>{{ item.description || '-' }}</td>
+                                    <th></th>
                                     <!--<td>{{ item.duration || '-' }}</td> -->
                                     <td class="text-right">{{ formattedPrice(item.price) || '-' }}</td>
                                 </tr>
 
                                 <tr>
                                     <td colspan="3" class="text-right"><b>{{ trans.get('app.section_total') }}:</b></td>
-                                    <td class="text-right"><span class="total_section">{{ formattedPrice(sectionTotal(section))}}<span class="iva-text"> + IVA/{{ section.type }}</span></span></td>      
+                                    <td class="text-right"><span class="total_section">{{ formattedPrice(sectionTotal(section))}}<span class="iva-text"> + IVA/{{ section.period }}</span></span></td>      
                                 </tr>
                                 
                             </table>

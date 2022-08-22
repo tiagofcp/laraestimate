@@ -3212,6 +3212,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['estimate', 'canShareEmail'],
   data: function data() {
@@ -49000,11 +49002,7 @@ var render = function() {
                                       )
                                     ]),
                                     _vm._v(" "),
-                                    _c("th", [
-                                      _vm._v(
-                                        _vm._s(_vm.trans.get("app.duration"))
-                                      )
-                                    ]),
+                                    _c("th"),
                                     _vm._v(" "),
                                     _c("th", { staticClass: "text-right" }, [
                                       _vm._v(_vm._s(_vm.trans.get("app.price")))
@@ -49098,6 +49096,8 @@ var render = function() {
                                           )
                                         ]),
                                         _vm._v(" "),
+                                        _c("th"),
+                                        _vm._v(" "),
                                         _c(
                                           "td",
                                           { staticClass: "text-right" },
@@ -49150,7 +49150,8 @@ var render = function() {
                                             { staticClass: "iva-text" },
                                             [
                                               _vm._v(
-                                                " + IVA/" + _vm._s(section.type)
+                                                " + IVA/" +
+                                                  _vm._s(section.period)
                                               )
                                             ]
                                           )
