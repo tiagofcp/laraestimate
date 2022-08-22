@@ -2,7 +2,26 @@
 .section:hover {
     /* background-color: #fcfcfc; */
 }
+
+#duration {
+  border-radius: 0px !important;
+  display: block;
+  width: 100%;
+  height: calc(1.6em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
 </style>
+
 
 <template>
     <div class="section p-2 mb-5" v-if="sectionData">
@@ -23,9 +42,23 @@
         <div class="mt-4">
             <VueTrix v-model="sectionData.text" @input="saveSectionWithDebounce()" placeholder="Add your section content here. You can use *TOTAL_PRICE* to show the estimate total price in any place, and *TOTAL_SELECTED_PRICE* to show the total selected price." />
 
+            
             <div class="mt-4" v-if="sectionData.type == 'prices'">
                 
                  <draggable v-model="sectionData.items" draggable=".item" handle=".handle" @end="saveSection()">
+
+                    <div class="select_per">
+                        <label for="period">Escolha a Periodicidade:</label>
+                            <select class="form-select" name = "Period" id = "period" v-model="sectionData.period" @input="saveSectionWithDebounce()" @blur="saveSection()">
+
+                                <option value="" selected disabled hidden>Selecionar Periodicidade</option>
+                                <option value ="Mes">Mensal</option>
+                                <option value ="Ano">Anual</option>
+                                <option value =" ">De uma so vez</option>
+
+                            </select>   
+                    </div>
+
                     <div class="row mt-2 item" v-for="(item, index) in sectionData.items" :key="item.id">
                         <div class="col-md-2">
                             <div class="switch-container">
@@ -40,14 +73,26 @@
                             <input type="text" class="form-control" :placeholder="trans.get('app.item_description')" v-model="item.description" @input="saveSectionWithDebounce()" @blur="saveSection()">
                         </div>
                         <div class="col-md-2">
-                            <input type="text" class="form-control" :placeholder="trans.get('app.item_duration')" v-model="item.duration" @input="saveSectionWithDebounce()" @blur="saveSection()">
+
+
+                           <!-- <input type="text" class="form-control" id="period" v-model="periodSelected" readonly> --->
+                        
+                        
+                            <!--<input type="text" class="form-control" :placeholder="trans.get('app.item_duration')" v-model="item.duration" @input="saveSectionWithDebounce()" @blur="saveSection()">--->
+                            <!--<select class="form-select" name = 'Duration' id = 'duration' v-model="item.duration" @input="saveSectionWithDebounce()" @blur="saveSection()">
+                                <option value="" selected disabled hidden>Selecionar duração</option>
+                                <option value = 'Mensal'>Mensal</option>
+                                <option value = 'Anual'>Anual</option>
+                                <option value = 'Outro'>Outro</option>
+                            </select>-->
+
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-2">  
                             <input type="number" step="0.1" class="form-control" :placeholder="trans.get('app.item_price')" v-model="item.price" @input="saveSectionWithDebounce()" @blur="saveSection()">
                         </div>
                         <div class="col-md-1 text-right">
                             <button class="btn btn-sm btn-outline-secondary mt-2 handle" :disabled="!item.id" :title="trans.get('app.labels.move')"><i class="icon ion-md-move"></i></button>
-                            <button class="btn btn-sm btn-outline-danger mt-2"  :title="trans.get('app.labels.remove')"@click="removeItem(index)"><i class="icon ion-md-trash"></i></button>
+                            <button class="btn btn-sm btn-outline-danger mt-2"  :title="trans.get('app.labels.remove')" @click="removeItem(index)"><i class="icon ion-md-trash"></i></button>
                         </div>
                     </div>
                 </draggable>
@@ -57,7 +102,7 @@
                         <b>{{ trans.get('app.labels.total') }} {{ formattedTotal }}</b>
                     </div>
                 </div>
-                <button class="btn btn-sm btn-secondary mt-2" @click="addItem()"><i class="icon ion-md-add"></i> {{ trans.get('app.add_item') }}</button>
+                <button class="btn btn-sm btn-secondary mt-2" @click="addItem(periodSelected)"><i class="icon ion-md-add"></i> {{ trans.get('app.add_item') }}</button>
             </div>
         </div>
 
@@ -113,12 +158,15 @@ export default {
                 this.currencySettings.thousands_separator,
             );
         }
+
     },
 
     watch: {
         sectionData() {
             this.$emit('sectionUpdated', this.sectionData);
-        }
+        },
+
+
     },
 
     methods: {
@@ -158,6 +206,7 @@ export default {
             axios.post(url, {
                 text: this.sectionData.text,
                 type: this.sectionData.type,
+                period: this.sectionData.period,
                 items: this.sectionData.items,
             }).then(({data}) => {
                 this.sectionData.id = data.id;
@@ -171,6 +220,7 @@ export default {
 
             axios.put(url, {
                 text: this.sectionData.text,
+                period: this.sectionData.period,
                 items: this.sectionData.items,
             });
         },
@@ -194,10 +244,10 @@ export default {
             });
         },
 
-        addItem() {
+        addItem(period) {
             this.sectionData.items.push({
                 'description': '',
-                'duration': '',
+                'duration': period,
                 'price': null,
                 'obligatory': false,
             });
@@ -219,6 +269,26 @@ export default {
                 this.saving = false;
             }, 500);
         },
+
+        updatePeriod() {
+
+            this.saveSection.items.forEach(element => {
+
+                element.duration = this.periodSelected;   
+
+            });
+
+            this.saveSectionWithDebounce();
+            this.saveSection();
+        }
+
+
     }
 }
+
+
+
+
+
+
 </script>

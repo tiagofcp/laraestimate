@@ -146,6 +146,7 @@ export default {
             this.sections.push({
                 'id': null,
                 'text': '',
+                'period':'',
                 'type': type,
                 'madeFirstInput': true,
                 'items': [],

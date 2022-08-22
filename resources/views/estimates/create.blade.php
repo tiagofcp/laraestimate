@@ -33,7 +33,7 @@
                                     <span class="slider round"></span>
                                 </label>
                                 
-                                Use name as title?
+                                Usar nome como título? 
                             </div>
                         </div>
 

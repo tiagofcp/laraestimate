@@ -13,7 +13,7 @@
             <div class="searchbar mt-4 mb-4">
                 <form>
                     <div class="input-group">
-                        <input id="listItemsSearch" type="text" name="search" placeholder="Search..." class="form-control form-control-lg" value="{{ isset($search) ? $search : '' }}">
+                        <input id="listItemsSearch" type="text" name="search" placeholder="Procurar..." class="form-control form-control-lg" value="{{ isset($search) ? $search : '' }}">
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-primary btn-lg" type="button">
                                 <i class="icon ion-md-search"></i>
