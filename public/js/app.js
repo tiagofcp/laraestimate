@@ -4215,7 +4215,7 @@ var render = function render() {
       staticClass: "total_section"
     }, [_vm._v(_vm._s(_vm.formattedPrice(_vm.sectionTotal(section)))), _c("span", {
       staticClass: "iva-text"
-    }, [_vm._v(" + IVA"), section.period !== "DV" ? _c("span", [_vm._v("/" + _vm._s(section.period))]) : _vm._e()])])])])], 2) : _vm._e()])]);
+    }, [_vm._v(" + IVA"), section.period !== "DV" && section.period !== null ? _c("span", [_vm._v("/" + _vm._s(section.period))]) : _vm._e()])])])])], 2) : _vm._e()])]);
   })], 2) : _vm._e()])])]);
 };
 
@@ -4476,7 +4476,7 @@ var render = function render() {
     }
   }, [_c("option", {
     attrs: {
-      value: "",
+      value: "NULL",
       selected: "",
       disabled: "",
       hidden: ""

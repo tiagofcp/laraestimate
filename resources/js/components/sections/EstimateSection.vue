@@ -51,7 +51,7 @@
                         <label for="period">Escolha a Periodicidade:</label>
                             <select class="form-select" name = "Period" id = "period" v-model="sectionData.period" @input="saveSectionWithDebounce()" @blur="saveSection()">
 
-                                <option value="" selected disabled hidden>Selecionar Periodicidade</option>
+                                <option value=NULL selected disabled hidden>Selecionar Periodicidade</option>
                                 <option value ="Mês">Mensal</option>
                                 <option value ="Ano">Anual</option>
                                 <option value ="DV">De uma só vez</option>
