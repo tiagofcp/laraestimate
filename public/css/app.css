@@ -14415,6 +14415,22 @@ a.text-primary:focus {
 }
 
 @media print {
+@page {
+    size: 216mm 295mm;
+    margin-left: 15mm;
+    margin-right: 15mm;
+    margin-top: 10mm;
+    margin-bottom: 10mm;
+}
+
+  header {
+    display: none;
+  }
+
+  footer {
+    display: none;
+  }
+
   .d-print-none {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
@@ -14468,6 +14484,7 @@ a.text-primary:focus {
   }
 
   body {
+    margin: 1.6cm;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
@@ -14476,6 +14493,10 @@ a.text-primary:focus {
   .table td {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+  }
+
+  .col-md-8 {
+    margin: 1.6cm;
   }
 }
 
