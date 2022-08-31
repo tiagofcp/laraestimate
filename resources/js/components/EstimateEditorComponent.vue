@@ -211,6 +211,9 @@ export default {
 
             let currencySettings = this.estimateData.currency_settings;
             
+            if (currencySettings.thousands_separator==null)
+                currencySettings.thousands_separator='';
+
             return currencySettings.symbol + ' ' + formatMoney(
                 money, 
                 2, 

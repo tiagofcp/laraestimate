@@ -151,6 +151,8 @@ export default {
         },
 
         formattedTotal() {
+
+
             return this.currencySettings.symbol + ' ' + formatMoney(
                 this.total,
                 2,

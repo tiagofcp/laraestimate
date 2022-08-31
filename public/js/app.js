@@ -2311,6 +2311,7 @@ __webpack_require__.r(__webpack_exports__);
     }(function (money) {
       if (!this.estimateData) return '-';
       var currencySettings = this.estimateData.currency_settings;
+      if (currencySettings.thousands_separator == null) currencySettings.thousands_separator = '';
       return currencySettings.symbol + ' ' + formatMoney(money, 2, currencySettings.decimal_separator, currencySettings.thousands_separator).toString();
     })
   }
