@@ -15,7 +15,6 @@
         min-height: 100vh;
         background-color: #eee;
         text-align: justify;
-
     }
 
     #estimateMainSection h1 {
@@ -83,11 +82,6 @@
         height: 17px;
         width: 25px;
 
-    }
-
-    #estimateDocument{
-
-        padding-top: 80px !important; 
     }
 
 
@@ -239,7 +233,7 @@
                 >
                     <path
                         d="M194.447 269.383C184.937 237.623 160.42 212.586 128.899 202.401L22.9908 174.538C-5.95562 166.878 -6.37344 152.813 22.0215 143.347L324.555 42.2467C352.382 32.7806 367.975 48.1003 357.948 76.3648L250.936 376.32C240.775 404.166 226.87 404.166 219.767 374.647L194.447 269.366V269.383Z"
-                        stroke="#58a8dc"
+                        stroke="#1F1C33"
                         stroke-width="0.35"
                         stroke-miterlimit="10"
                     ></path>
@@ -1223,6 +1217,4 @@ export default {
     }
 
 }
-
-
 </script>
