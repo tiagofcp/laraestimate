@@ -54,6 +54,7 @@
                                 <option value=NULL selected disabled hidden>Selecionar Periodicidade</option>
                                 <option value ="Mês">Mensal</option>
                                 <option value ="Ano">Anual</option>
+                                <option value ="Hora">À Hora</option>
                                 <option value ="DV">De uma só vez</option>
 
                             </select>   
