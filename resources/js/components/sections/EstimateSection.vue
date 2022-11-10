@@ -56,7 +56,6 @@
                                 <option value ="Ano">Anual</option>
                                 <option value ="Hora">À Hora</option>
                                 <option value ="DV">De uma só vez</option>
-
                             </select>   
                     </div>
 
