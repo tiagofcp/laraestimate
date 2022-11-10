@@ -2222,19 +2222,16 @@ __webpack_require__.r(__webpack_exports__);
     },
     getEstimate: function getEstimate() {
       var _this = this;
-
       var url = '/estimates/:estimate/data';
       url = url.replace(':estimate', this.estimate);
       axios.get(url).then(function (_ref) {
         var data = _ref.data;
         _this.estimateData = data;
-
         _this.getSections();
       });
     },
     getSections: function getSections() {
       var _this2 = this;
-
       var url = '/estimates/:estimate/sections';
       url = url.replace(':estimate', this.estimate);
       axios.get(url).then(function (_ref2) {
@@ -2256,7 +2253,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     showSavingLabel: function showSavingLabel() {
       var _this3 = this;
-
       this.saving = true;
       setTimeout(function () {
         _this3.saving = false;
@@ -2302,11 +2298,9 @@ __webpack_require__.r(__webpack_exports__);
       function formatMoney(_x) {
         return _formatMoney.apply(this, arguments);
       }
-
       formatMoney.toString = function () {
         return _formatMoney.toString();
       };
-
       return formatMoney;
     }(function (money) {
       if (!this.estimateData) return '-';
@@ -2347,7 +2341,6 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     estimateTotalPrice: function estimateTotalPrice() {
       var _this = this;
-
       if (!this.estimateData.sections) return 0;
       var total = this.estimateData.sections.reduce(function (sum, section) {
         return sum + _this.sectionTotal(section, false);
@@ -2356,7 +2349,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     estimateTotalSelectedPrice: function estimateTotalSelectedPrice() {
       var _this2 = this;
-
       if (!this.estimateData.sections) return 0;
       var total = this.estimateData.sections.reduce(function (sum, section) {
         return sum + _this2.sectionTotal(section, true);
@@ -2367,11 +2359,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     init: function init() {
       var _this3 = this;
-
       axios.get('/estimates/' + this.estimate + '/data').then(function (_ref) {
         var data = _ref.data;
         _this3.estimateData = _this3.treatData(data);
-
         _this3.$nextTick(function () {
           _this3.renderPrices();
         });
@@ -2391,11 +2381,9 @@ __webpack_require__.r(__webpack_exports__);
       var onlySelected = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
       var total = section.items.reduce(function (sum, item) {
         var itemPrice = parseFloat(item.price) || 0;
-
         if (onlySelected) {
           itemPrice = !item.selected ? 0 : itemPrice;
         }
-
         return sum + itemPrice;
       }, 0);
       return parseFloat(total);
@@ -2406,7 +2394,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     renderPrices: function renderPrices() {
       var _this4 = this;
-
       var totalPriceElements = document.querySelectorAll('.total-calc-price');
       var totalSelectedPriceElements = document.querySelectorAll('.total-selected-calc-price');
       totalPriceElements.forEach(function (priceElement) {
@@ -2428,7 +2415,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     sendEmail: function sendEmail() {
       var _this5 = this;
-
       this.sendingEmail = true;
       axios.post('/estimates/' + this.estimate + '/share', {
         'email': this.shareEmail
@@ -2449,8 +2435,8 @@ __webpack_require__.r(__webpack_exports__);
        * update the VirtualDOM on beforeprint event
        */
       var container = document.getElementById('printContainer'),
-          estimate = document.getElementById('estimateDocument'),
-          mainElement = document.getElementById('estimateMainSection');
+        estimate = document.getElementById('estimateDocument'),
+        mainElement = document.getElementById('estimateMainSection');
       container.classList.remove('container');
       container.classList.add('container-fluid');
       estimate.classList.add('col');
@@ -2460,8 +2446,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     returnToViewMode: function returnToViewMode() {
       var container = document.getElementById('printContainer'),
-          estimate = document.getElementById('estimateDocument'),
-          mainElement = document.getElementById('estimateMainSection');
+        estimate = document.getElementById('estimateDocument'),
+        mainElement = document.getElementById('estimateMainSection');
       container.classList.add('container');
       container.classList.remove('container-fluid');
       estimate.classList.remove('col');
@@ -2487,15 +2473,12 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     onChange: function onChange(e) {
       var _this = this;
-
       if (!e.target.files.length) return;
       var file = e.target.files[0];
       var reader = new FileReader();
       reader.readAsDataURL(file);
-
       reader.onload = function (e) {
         var src = e.target.result;
-
         _this.$emit('loaded', {
           src: src,
           file: file
@@ -2542,7 +2525,6 @@ __webpack_require__.r(__webpack_exports__);
         if (error.response) {
           var _data = error.response.data;
           var errors = _data.errors;
-
           if (errors) {
             for (var key in errors) {
               toast.error(errors[key][0]);
@@ -2555,7 +2537,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     remove: function remove() {
       var _this = this;
-
       if (!this.image) return;
       bootbox.confirm(translate.get('app.dialogs.are_you_sure'), function (confirmed) {
         if (confirmed) {
@@ -2636,20 +2617,16 @@ __webpack_require__.r(__webpack_exports__);
         this.madeFirstInput = true;
         return;
       }
-
       this.$emit('sectionUpdated', this.sectionData);
       this.showSavingLabel();
-
       if (!this.sectionData.id) {
         this.save();
         return;
       }
-
       this.update();
     },
     save: function save() {
       var _this = this;
-
       var url = '/estimates/:estimate/sections';
       url = url.replace(':estimate', this.estimate);
       axios.post(url, {
@@ -2674,19 +2651,16 @@ __webpack_require__.r(__webpack_exports__);
     },
     remove: function remove() {
       var _this2 = this;
-
       if (!this.sectionData.id) {
         this.$emit('sectionRemoved');
         return;
       }
-
       var url = '/estimates/:estimate/sections/:section';
       url = url.replace(':estimate', this.estimate);
       url = url.replace(':section', this.sectionData.id);
       bootbox.confirm(translate.get('app.dialogs.are_you_sure'), function (confirmed) {
         if (confirmed) {
           axios["delete"](url);
-
           _this2.$emit('sectionRemoved');
         }
       });
@@ -2701,18 +2675,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     removeItem: function removeItem(index) {
       var _this3 = this;
-
       bootbox.confirm(translate.get('app.dialogs.are_you_sure'), function (confirmed) {
         if (confirmed) {
           _this3.sectionData.items.splice(index, 1);
-
           _this3.saveSection();
         }
       });
     },
     showSavingLabel: function showSavingLabel() {
       var _this4 = this;
-
       this.saving = true;
       setTimeout(function () {
         _this4.saving = false;
@@ -2720,7 +2691,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     updatePeriod: function updatePeriod() {
       var _this5 = this;
-
       this.saveSection.items.forEach(function (element) {
         element.duration = _this5.periodSelected;
       });
@@ -2745,8 +2715,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 var render = function render() {
   var _vm = this,
-      _c = _vm._self._c;
-
+    _c = _vm._self._c;
   return _c("div", [_vm.estimateData ? _c("div", {
     staticClass: "row"
   }, [_c("div", {
@@ -2768,7 +2737,6 @@ var render = function render() {
     on: {
       input: [function ($event) {
         if ($event.target.composing) return;
-
         _vm.$set(_vm.estimateData, "name", $event.target.value);
       }, function ($event) {
         return _vm.updateDebounced();
@@ -2796,13 +2764,11 @@ var render = function render() {
     on: {
       change: [function ($event) {
         var $$a = _vm.estimateData.use_name_as_title,
-            $$el = $event.target,
-            $$c = $$el.checked ? true : false;
-
+          $$el = $event.target,
+          $$c = $$el.checked ? true : false;
         if (Array.isArray($$a)) {
           var $$v = null,
-              $$i = _vm._i($$a, $$v);
-
+            $$i = _vm._i($$a, $$v);
           if ($$el.checked) {
             $$i < 0 && _vm.$set(_vm.estimateData, "use_name_as_title", $$a.concat([$$v]));
           } else {
@@ -2840,7 +2806,6 @@ var render = function render() {
     on: {
       input: [function ($event) {
         if ($event.target.composing) return;
-
         _vm.$set(_vm.estimateData.currency_settings, "symbol", $event.target.value);
       }, function ($event) {
         return _vm.updateDebounced();
@@ -2869,7 +2834,6 @@ var render = function render() {
     on: {
       input: [function ($event) {
         if ($event.target.composing) return;
-
         _vm.$set(_vm.estimateData.currency_settings, "decimal_separator", $event.target.value);
       }, function ($event) {
         return _vm.updateDebounced();
@@ -2898,7 +2862,6 @@ var render = function render() {
     on: {
       input: [function ($event) {
         if ($event.target.composing) return;
-
         _vm.$set(_vm.estimateData.currency_settings, "thousands_separator", $event.target.value);
       }, function ($event) {
         return _vm.updateDebounced();
@@ -2972,7 +2935,6 @@ var render = function render() {
     staticClass: "icon ion-md-cash"
   }), _vm._v(" " + _vm._s(_vm.trans.get("app.add_prices_section")))])])])]);
 };
-
 var staticRenderFns = [];
 render._withStripped = true;
 
@@ -2992,8 +2954,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 var render = function render() {
   var _vm = this,
-      _c = _vm._self._c;
-
+    _c = _vm._self._c;
   return _c("main", {
     staticClass: "p-md-5",
     attrs: {
@@ -4183,13 +4144,11 @@ var render = function render() {
         on: {
           change: [function ($event) {
             var $$a = item.selected,
-                $$el = $event.target,
-                $$c = $$el.checked ? true : false;
-
+              $$el = $event.target,
+              $$c = $$el.checked ? true : false;
             if (Array.isArray($$a)) {
               var $$v = null,
-                  $$i = _vm._i($$a, $$v);
-
+                $$i = _vm._i($$a, $$v);
               if ($$el.checked) {
                 $$i < 0 && _vm.$set(item, "selected", $$a.concat([$$v]));
               } else {
@@ -4219,11 +4178,9 @@ var render = function render() {
     }, [_vm._v(" + IVA"), section.period !== "DV" && section.period !== null ? _c("span", [_vm._v("/" + _vm._s(section.period))]) : _vm._e()])])])])], 2) : _vm._e()])]);
   })], 2) : _vm._e()])])]);
 };
-
 var staticRenderFns = [function () {
   var _vm = this,
-      _c = _vm._self._c;
-
+    _c = _vm._self._c;
   return _c("button", {
     staticClass: "close",
     attrs: {
@@ -4238,8 +4195,7 @@ var staticRenderFns = [function () {
   }, [_vm._v("×")])]);
 }, function () {
   var _vm = this,
-      _c = _vm._self._c;
-
+    _c = _vm._self._c;
   return _c("p", {
     staticClass: "absolute left-11 top-[262px] text-6xl font-bold text-left"
   }, [_c("span", {
@@ -4251,8 +4207,7 @@ var staticRenderFns = [function () {
   }, [_vm._v("YOUR WORLD")])]);
 }, function () {
   var _vm = this,
-      _c = _vm._self._c;
-
+    _c = _vm._self._c;
   return _c("p", {
     staticClass: "w-[913px] h-[54px] absolute left-11 top-[517px] text-xl font-bold text-left text-[#5aa8db]"
   }, [_c("span", {
@@ -4279,8 +4234,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 var render = function render() {
   var _vm = this,
-      _c = _vm._self._c;
-
+    _c = _vm._self._c;
   return _c("input", {
     attrs: {
       type: "file",
@@ -4291,7 +4245,6 @@ var render = function render() {
     }
   });
 };
-
 var staticRenderFns = [];
 render._withStripped = true;
 
@@ -4311,8 +4264,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 var render = function render() {
   var _vm = this,
-      _c = _vm._self._c;
-
+    _c = _vm._self._c;
   return _c("div", {
     staticClass: "mt-2"
   }, [_c("div", {
@@ -4352,7 +4304,6 @@ var render = function render() {
     }
   })], 1)]);
 };
-
 var staticRenderFns = [];
 render._withStripped = true;
 
@@ -4372,8 +4323,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 var render = function render() {
   var _vm = this,
-      _c = _vm._self._c;
-
+    _c = _vm._self._c;
   return _vm.sectionData ? _c("div", {
     staticClass: "section p-2 mb-5"
   }, [_c("div", [_vm.sectionData.type == "text" ? _c("small", {
@@ -4471,7 +4421,6 @@ var render = function render() {
           var val = "_value" in o ? o._value : o.value;
           return val;
         });
-
         _vm.$set(_vm.sectionData, "period", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
       }
     }
@@ -4491,6 +4440,10 @@ var render = function render() {
       value: "Ano"
     }
   }, [_vm._v("Anual")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "Hora"
+    }
+  }, [_vm._v("À Hora")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "DV"
     }
@@ -4520,13 +4473,11 @@ var render = function render() {
       on: {
         change: [function ($event) {
           var $$a = item.obligatory,
-              $$el = $event.target,
-              $$c = $$el.checked ? true : false;
-
+            $$el = $event.target,
+            $$c = $$el.checked ? true : false;
           if (Array.isArray($$a)) {
             var $$v = null,
-                $$i = _vm._i($$a, $$v);
-
+              $$i = _vm._i($$a, $$v);
             if ($$el.checked) {
               $$i < 0 && _vm.$set(item, "obligatory", $$a.concat([$$v]));
             } else {
@@ -4561,7 +4512,6 @@ var render = function render() {
       on: {
         input: [function ($event) {
           if ($event.target.composing) return;
-
           _vm.$set(item, "description", $event.target.value);
         }, function ($event) {
           return _vm.saveSectionWithDebounce();
@@ -4593,7 +4543,6 @@ var render = function render() {
       on: {
         input: [function ($event) {
           if ($event.target.composing) return;
-
           _vm.$set(item, "price", $event.target.value);
         }, function ($event) {
           return _vm.saveSectionWithDebounce();
@@ -4642,7 +4591,6 @@ var render = function render() {
     staticClass: "mt-4"
   })]) : _vm._e();
 };
-
 var staticRenderFns = [];
 render._withStripped = true;
 
@@ -10658,7 +10606,7 @@ function toComment(sourceMap) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
- * jQuery JavaScript Library v3.6.0
+ * jQuery JavaScript Library v3.6.1
  * https://jquery.com/
  *
  * Includes Sizzle.js
@@ -10668,7 +10616,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
  * Released under the MIT license
  * https://jquery.org/license
  *
- * Date: 2021-03-02T17:08Z
+ * Date: 2022-08-26T17:52Z
  */
 ( function( global, factory ) {
 
@@ -10682,7 +10630,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 		// (such as Node.js), expose a factory as module.exports.
 		// This accentuates the need for the creation of a real `window`.
 		// e.g. var jQuery = require("jquery")(window);
-		// See ticket #14549 for more info.
+		// See ticket trac-14549 for more info.
 		module.exports = global.document ?
 			factory( global, true ) :
 			function( w ) {
@@ -10810,7 +10758,7 @@ function toType( obj ) {
 
 
 var
-	version = "3.6.0",
+	version = "3.6.1",
 
 	// Define a local copy of jQuery
 	jQuery = function( selector, context ) {
@@ -13788,8 +13736,8 @@ jQuery.fn.extend( {
 var rootjQuery,
 
 	// A simple way to check for HTML strings
-	// Prioritize #id over <tag> to avoid XSS via location.hash (#9521)
-	// Strict HTML recognition (#11290: must start with <)
+	// Prioritize #id over <tag> to avoid XSS via location.hash (trac-9521)
+	// Strict HTML recognition (trac-11290: must start with <)
 	// Shortcut simple #id case for speed
 	rquickExpr = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]+))$/,
 
@@ -14746,7 +14694,7 @@ jQuery.extend( {
 	isReady: false,
 
 	// A counter to track how many items to wait for before
-	// the ready event fires. See #6781
+	// the ready event fires. See trac-6781
 	readyWait: 1,
 
 	// Handle when the DOM is ready
@@ -14874,7 +14822,7 @@ function fcamelCase( _all, letter ) {
 
 // Convert dashed to camelCase; used by the css and data modules
 // Support: IE <=9 - 11, Edge 12 - 15
-// Microsoft forgot to hump their vendor prefix (#9572)
+// Microsoft forgot to hump their vendor prefix (trac-9572)
 function camelCase( string ) {
 	return string.replace( rmsPrefix, "ms-" ).replace( rdashAlpha, fcamelCase );
 }
@@ -14910,7 +14858,7 @@ Data.prototype = {
 			value = {};
 
 			// We can accept data for non-element nodes in modern browsers,
-			// but we should not, see #8335.
+			// but we should not, see trac-8335.
 			// Always return an empty object.
 			if ( acceptData( owner ) ) {
 
@@ -15149,7 +15097,7 @@ jQuery.fn.extend( {
 					while ( i-- ) {
 
 						// Support: IE 11 only
-						// The attrs elements can be null (#14894)
+						// The attrs elements can be null (trac-14894)
 						if ( attrs[ i ] ) {
 							name = attrs[ i ].name;
 							if ( name.indexOf( "data-" ) === 0 ) {
@@ -15572,9 +15520,9 @@ var rscriptType = ( /^$|^module$|\/(?:java|ecma)script/i );
 		input = document.createElement( "input" );
 
 	// Support: Android 4.0 - 4.3 only
-	// Check state lost if the name is set (#11217)
+	// Check state lost if the name is set (trac-11217)
 	// Support: Windows Web Apps (WWA)
-	// `name` and `type` must use .setAttribute for WWA (#14901)
+	// `name` and `type` must use .setAttribute for WWA (trac-14901)
 	input.setAttribute( "type", "radio" );
 	input.setAttribute( "checked", "checked" );
 	input.setAttribute( "name", "t" );
@@ -15598,7 +15546,7 @@ var rscriptType = ( /^$|^module$|\/(?:java|ecma)script/i );
 } )();
 
 
-// We have to close these tags to support XHTML (#13200)
+// We have to close these tags to support XHTML (trac-13200)
 var wrapMap = {
 
 	// XHTML parsers do not magically insert elements in the
@@ -15624,7 +15572,7 @@ if ( !support.option ) {
 function getAll( context, tag ) {
 
 	// Support: IE <=9 - 11 only
-	// Use typeof to avoid zero-argument method invocation on host objects (#15151)
+	// Use typeof to avoid zero-argument method invocation on host objects (trac-15151)
 	var ret;
 
 	if ( typeof context.getElementsByTagName !== "undefined" ) {
@@ -15707,7 +15655,7 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 				// Remember the top-level container
 				tmp = fragment.firstChild;
 
-				// Ensure the created nodes are orphaned (#12392)
+				// Ensure the created nodes are orphaned (trac-12392)
 				tmp.textContent = "";
 			}
 		}
@@ -16128,15 +16076,15 @@ jQuery.event = {
 
 			for ( ; cur !== this; cur = cur.parentNode || this ) {
 
-				// Don't check non-elements (#13208)
-				// Don't process clicks on disabled elements (#6911, #8165, #11382, #11764)
+				// Don't check non-elements (trac-13208)
+				// Don't process clicks on disabled elements (trac-6911, trac-8165, trac-11382, trac-11764)
 				if ( cur.nodeType === 1 && !( event.type === "click" && cur.disabled === true ) ) {
 					matchedHandlers = [];
 					matchedSelectors = {};
 					for ( i = 0; i < delegateCount; i++ ) {
 						handleObj = handlers[ i ];
 
-						// Don't conflict with Object.prototype properties (#13203)
+						// Don't conflict with Object.prototype properties (trac-13203)
 						sel = handleObj.selector + " ";
 
 						if ( matchedSelectors[ sel ] === undefined ) {
@@ -16390,7 +16338,7 @@ jQuery.Event = function( src, props ) {
 
 		// Create target properties
 		// Support: Safari <=6 - 7 only
-		// Target should not be a text node (#504, #13143)
+		// Target should not be a text node (trac-504, trac-13143)
 		this.target = ( src.target && src.target.nodeType === 3 ) ?
 			src.target.parentNode :
 			src.target;
@@ -16513,10 +16461,10 @@ jQuery.each( { focus: "focusin", blur: "focusout" }, function( type, delegateTyp
 			return true;
 		},
 
-		// Suppress native focus or blur as it's already being fired
-		// in leverageNative.
-		_default: function() {
-			return true;
+		// Suppress native focus or blur if we're currently inside
+		// a leveraged native-event stack
+		_default: function( event ) {
+			return dataPriv.get( event.target, type );
 		},
 
 		delegateType: delegateType
@@ -16615,7 +16563,8 @@ var
 
 	// checked="checked" or checked
 	rchecked = /checked\s*(?:[^=]|=\s*.checked.)/i,
-	rcleanScript = /^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g;
+
+	rcleanScript = /^\s*<!\[CDATA\[|\]\]>\s*$/g;
 
 // Prefer a tbody over its parent table for containing new rows
 function manipulationTarget( elem, content ) {
@@ -16729,7 +16678,7 @@ function domManip( collection, args, callback, ignored ) {
 
 			// Use the original fragment for the last item
 			// instead of the first because it can end up
-			// being emptied incorrectly in certain situations (#8070).
+			// being emptied incorrectly in certain situations (trac-8070).
 			for ( ; i < l; i++ ) {
 				node = fragment;
 
@@ -16770,6 +16719,12 @@ function domManip( collection, args, callback, ignored ) {
 								}, doc );
 							}
 						} else {
+
+							// Unwrap a CDATA section containing script contents. This shouldn't be
+							// needed as in XML documents they're already not visible when
+							// inspecting element contents and in HTML documents they have no
+							// meaning but we're preserving that logic for backwards compatibility.
+							// This will be removed completely in 4.0. See gh-4904.
 							DOMEval( node.textContent.replace( rcleanScript, "" ), node, doc );
 						}
 					}
@@ -17052,9 +17007,12 @@ jQuery.each( {
 } );
 var rnumnonpx = new RegExp( "^(" + pnum + ")(?!px)[a-z%]+$", "i" );
 
+var rcustomProp = /^--/;
+
+
 var getStyles = function( elem ) {
 
-		// Support: IE <=11 only, Firefox <=30 (#15098, #14150)
+		// Support: IE <=11 only, Firefox <=30 (trac-15098, trac-14150)
 		// IE throws on elements created in popups
 		// FF meanwhile throws on frame elements through "defaultView.getComputedStyle"
 		var view = elem.ownerDocument.defaultView;
@@ -17088,6 +17046,15 @@ var swap = function( elem, options, callback ) {
 
 
 var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
+
+var whitespace = "[\\x20\\t\\r\\n\\f]";
+
+
+var rtrimCSS = new RegExp(
+	"^" + whitespace + "+|((?:^|[^\\\\])(?:\\\\.)*)" + whitespace + "+$",
+	"g"
+);
+
 
 
 
@@ -17154,7 +17121,7 @@ var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
 	}
 
 	// Support: IE <=9 - 11 only
-	// Style of cloned element affects source element cloned (#8908)
+	// Style of cloned element affects source element cloned (trac-8908)
 	div.style.backgroundClip = "content-box";
 	div.cloneNode( true ).style.backgroundClip = "";
 	support.clearCloneStyle = div.style.backgroundClip === "content-box";
@@ -17234,6 +17201,7 @@ var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
 
 function curCSS( elem, name, computed ) {
 	var width, minWidth, maxWidth, ret,
+		isCustomProp = rcustomProp.test( name ),
 
 		// Support: Firefox 51+
 		// Retrieving style before computed somehow
@@ -17244,10 +17212,21 @@ function curCSS( elem, name, computed ) {
 	computed = computed || getStyles( elem );
 
 	// getPropertyValue is needed for:
-	//   .css('filter') (IE 9 only, #12537)
-	//   .css('--customProperty) (#3144)
+	//   .css('filter') (IE 9 only, trac-12537)
+	//   .css('--customProperty) (gh-3144)
 	if ( computed ) {
 		ret = computed.getPropertyValue( name ) || computed[ name ];
+
+		// trim whitespace for custom property (issue gh-4926)
+		if ( isCustomProp ) {
+
+			// rtrim treats U+000D CARRIAGE RETURN and U+000C FORM FEED
+			// as whitespace while CSS does not, but this is not a problem
+			// because CSS preprocessing replaces them with U+000A LINE FEED
+			// (which *is* CSS whitespace)
+			// https://www.w3.org/TR/css-syntax-3/#input-preprocessing
+			ret = ret.replace( rtrimCSS, "$1" );
+		}
 
 		if ( ret === "" && !isAttached( elem ) ) {
 			ret = jQuery.style( elem, name );
@@ -17344,7 +17323,6 @@ var
 	// except "table", "table-cell", or "table-caption"
 	// See here for display values: https://developer.mozilla.org/en-US/docs/CSS/display
 	rdisplayswap = /^(none|table(?!-c[ea]).+)/,
-	rcustomProp = /^--/,
 	cssShow = { position: "absolute", visibility: "hidden", display: "block" },
 	cssNormalTransform = {
 		letterSpacing: "0",
@@ -17580,15 +17558,15 @@ jQuery.extend( {
 		if ( value !== undefined ) {
 			type = typeof value;
 
-			// Convert "+=" or "-=" to relative numbers (#7345)
+			// Convert "+=" or "-=" to relative numbers (trac-7345)
 			if ( type === "string" && ( ret = rcssNum.exec( value ) ) && ret[ 1 ] ) {
 				value = adjustCSS( elem, name, ret );
 
-				// Fixes bug #9237
+				// Fixes bug trac-9237
 				type = "number";
 			}
 
-			// Make sure that null and NaN values aren't set (#7116)
+			// Make sure that null and NaN values aren't set (trac-7116)
 			if ( value == null || value !== value ) {
 				return;
 			}
@@ -18212,7 +18190,7 @@ function Animation( elem, properties, options ) {
 				remaining = Math.max( 0, animation.startTime + animation.duration - currentTime ),
 
 				// Support: Android 2.3 only
-				// Archaic crash bug won't allow us to use `1 - ( 0.5 || 0 )` (#12497)
+				// Archaic crash bug won't allow us to use `1 - ( 0.5 || 0 )` (trac-12497)
 				temp = remaining / animation.duration || 0,
 				percent = 1 - temp,
 				index = 0,
@@ -18602,7 +18580,6 @@ jQuery.fx.speeds = {
 
 
 // Based off of the plugin by Clint Helfers, with permission.
-// https://web.archive.org/web/20100324014747/http://blindsignals.com/index.php/2009/07/jquery-delay/
 jQuery.fn.delay = function( time, type ) {
 	time = jQuery.fx ? jQuery.fx.speeds[ time ] || time : time;
 	type = type || "fx";
@@ -18827,8 +18804,7 @@ jQuery.extend( {
 				// Support: IE <=9 - 11 only
 				// elem.tabIndex doesn't always return the
 				// correct value when it hasn't been explicitly set
-				// https://web.archive.org/web/20141116233347/http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
-				// Use proper attribute retrieval(#12072)
+				// Use proper attribute retrieval (trac-12072)
 				var tabindex = jQuery.find.attr( elem, "tabindex" );
 
 				if ( tabindex ) {
@@ -18932,8 +18908,7 @@ function classesToArray( value ) {
 
 jQuery.fn.extend( {
 	addClass: function( value ) {
-		var classes, elem, cur, curValue, clazz, j, finalValue,
-			i = 0;
+		var classNames, cur, curValue, className, i, finalValue;
 
 		if ( isFunction( value ) ) {
 			return this.each( function( j ) {
@@ -18941,36 +18916,35 @@ jQuery.fn.extend( {
 			} );
 		}
 
-		classes = classesToArray( value );
+		classNames = classesToArray( value );
 
-		if ( classes.length ) {
-			while ( ( elem = this[ i++ ] ) ) {
-				curValue = getClass( elem );
-				cur = elem.nodeType === 1 && ( " " + stripAndCollapse( curValue ) + " " );
+		if ( classNames.length ) {
+			return this.each( function() {
+				curValue = getClass( this );
+				cur = this.nodeType === 1 && ( " " + stripAndCollapse( curValue ) + " " );
 
 				if ( cur ) {
-					j = 0;
-					while ( ( clazz = classes[ j++ ] ) ) {
-						if ( cur.indexOf( " " + clazz + " " ) < 0 ) {
-							cur += clazz + " ";
+					for ( i = 0; i < classNames.length; i++ ) {
+						className = classNames[ i ];
+						if ( cur.indexOf( " " + className + " " ) < 0 ) {
+							cur += className + " ";
 						}
 					}
 
 					// Only assign if different to avoid unneeded rendering.
 					finalValue = stripAndCollapse( cur );
 					if ( curValue !== finalValue ) {
-						elem.setAttribute( "class", finalValue );
+						this.setAttribute( "class", finalValue );
 					}
 				}
-			}
+			} );
 		}
 
 		return this;
 	},
 
 	removeClass: function( value ) {
-		var classes, elem, cur, curValue, clazz, j, finalValue,
-			i = 0;
+		var classNames, cur, curValue, className, i, finalValue;
 
 		if ( isFunction( value ) ) {
 			return this.each( function( j ) {
@@ -18982,44 +18956,41 @@ jQuery.fn.extend( {
 			return this.attr( "class", "" );
 		}
 
-		classes = classesToArray( value );
+		classNames = classesToArray( value );
 
-		if ( classes.length ) {
-			while ( ( elem = this[ i++ ] ) ) {
-				curValue = getClass( elem );
+		if ( classNames.length ) {
+			return this.each( function() {
+				curValue = getClass( this );
 
 				// This expression is here for better compressibility (see addClass)
-				cur = elem.nodeType === 1 && ( " " + stripAndCollapse( curValue ) + " " );
+				cur = this.nodeType === 1 && ( " " + stripAndCollapse( curValue ) + " " );
 
 				if ( cur ) {
-					j = 0;
-					while ( ( clazz = classes[ j++ ] ) ) {
+					for ( i = 0; i < classNames.length; i++ ) {
+						className = classNames[ i ];
 
 						// Remove *all* instances
-						while ( cur.indexOf( " " + clazz + " " ) > -1 ) {
-							cur = cur.replace( " " + clazz + " ", " " );
+						while ( cur.indexOf( " " + className + " " ) > -1 ) {
+							cur = cur.replace( " " + className + " ", " " );
 						}
 					}
 
 					// Only assign if different to avoid unneeded rendering.
 					finalValue = stripAndCollapse( cur );
 					if ( curValue !== finalValue ) {
-						elem.setAttribute( "class", finalValue );
+						this.setAttribute( "class", finalValue );
 					}
 				}
-			}
+			} );
 		}
 
 		return this;
 	},
 
 	toggleClass: function( value, stateVal ) {
-		var type = typeof value,
+		var classNames, className, i, self,
+			type = typeof value,
 			isValidValue = type === "string" || Array.isArray( value );
-
-		if ( typeof stateVal === "boolean" && isValidValue ) {
-			return stateVal ? this.addClass( value ) : this.removeClass( value );
-		}
 
 		if ( isFunction( value ) ) {
 			return this.each( function( i ) {
@@ -19030,17 +19001,20 @@ jQuery.fn.extend( {
 			} );
 		}
 
-		return this.each( function() {
-			var className, i, self, classNames;
+		if ( typeof stateVal === "boolean" && isValidValue ) {
+			return stateVal ? this.addClass( value ) : this.removeClass( value );
+		}
 
+		classNames = classesToArray( value );
+
+		return this.each( function() {
 			if ( isValidValue ) {
 
 				// Toggle individual class names
-				i = 0;
 				self = jQuery( this );
-				classNames = classesToArray( value );
 
-				while ( ( className = classNames[ i++ ] ) ) {
+				for ( i = 0; i < classNames.length; i++ ) {
+					className = classNames[ i ];
 
 					// Check each className given, space separated list
 					if ( self.hasClass( className ) ) {
@@ -19174,7 +19148,7 @@ jQuery.extend( {
 					val :
 
 					// Support: IE <=10 - 11 only
-					// option.text throws exceptions (#14686, #14858)
+					// option.text throws exceptions (trac-14686, trac-14858)
 					// Strip and collapse whitespace
 					// https://html.spec.whatwg.org/#strip-and-collapse-whitespace
 					stripAndCollapse( jQuery.text( elem ) );
@@ -19201,7 +19175,7 @@ jQuery.extend( {
 					option = options[ i ];
 
 					// Support: IE <=9 only
-					// IE8-9 doesn't update selected after form reset (#2551)
+					// IE8-9 doesn't update selected after form reset (trac-2551)
 					if ( ( option.selected || i === index ) &&
 
 							// Don't return options that are disabled or in a disabled optgroup
@@ -19344,8 +19318,8 @@ jQuery.extend( jQuery.event, {
 			return;
 		}
 
-		// Determine event propagation path in advance, per W3C events spec (#9951)
-		// Bubble up to document, then to window; watch for a global ownerDocument var (#9724)
+		// Determine event propagation path in advance, per W3C events spec (trac-9951)
+		// Bubble up to document, then to window; watch for a global ownerDocument var (trac-9724)
 		if ( !onlyHandlers && !special.noBubble && !isWindow( elem ) ) {
 
 			bubbleType = special.delegateType || type;
@@ -19397,7 +19371,7 @@ jQuery.extend( jQuery.event, {
 				acceptData( elem ) ) {
 
 				// Call a native DOM method on the target with the same name as the event.
-				// Don't do default actions on window, that's where global variables be (#6170)
+				// Don't do default actions on window, that's where global variables be (trac-6170)
 				if ( ontype && isFunction( elem[ type ] ) && !isWindow( elem ) ) {
 
 					// Don't re-trigger an onFOO event when we call its FOO() method
@@ -19671,7 +19645,7 @@ var
 	rantiCache = /([?&])_=[^&]*/,
 	rheaders = /^(.*?):[ \t]*([^\r\n]*)$/mg,
 
-	// #7653, #8125, #8152: local protocol detection
+	// trac-7653, trac-8125, trac-8152: local protocol detection
 	rlocalProtocol = /^(?:about|app|app-storage|.+-extension|file|res|widget):$/,
 	rnoContent = /^(?:GET|HEAD)$/,
 	rprotocol = /^\/\//,
@@ -19694,7 +19668,7 @@ var
 	 */
 	transports = {},
 
-	// Avoid comment-prolog char sequence (#10098); must appease lint and evade compression
+	// Avoid comment-prolog char sequence (trac-10098); must appease lint and evade compression
 	allTypes = "*/".concat( "*" ),
 
 	// Anchor tag for parsing the document origin
@@ -19765,7 +19739,7 @@ function inspectPrefiltersOrTransports( structure, options, originalOptions, jqX
 
 // A special extend for ajax options
 // that takes "flat" options (not to be deep extended)
-// Fixes #9887
+// Fixes trac-9887
 function ajaxExtend( target, src ) {
 	var key, deep,
 		flatOptions = jQuery.ajaxSettings.flatOptions || {};
@@ -20176,12 +20150,12 @@ jQuery.extend( {
 		deferred.promise( jqXHR );
 
 		// Add protocol if not provided (prefilters might expect it)
-		// Handle falsy url in the settings object (#10093: consistency with old signature)
+		// Handle falsy url in the settings object (trac-10093: consistency with old signature)
 		// We also use the url parameter if available
 		s.url = ( ( url || s.url || location.href ) + "" )
 			.replace( rprotocol, location.protocol + "//" );
 
-		// Alias method option to type as per ticket #12004
+		// Alias method option to type as per ticket trac-12004
 		s.type = options.method || options.type || s.method || s.type;
 
 		// Extract dataTypes list
@@ -20224,7 +20198,7 @@ jQuery.extend( {
 		}
 
 		// We can fire global events as of now if asked to
-		// Don't fire events if jQuery.event is undefined in an AMD-usage scenario (#15118)
+		// Don't fire events if jQuery.event is undefined in an AMD-usage scenario (trac-15118)
 		fireGlobals = jQuery.event && s.global;
 
 		// Watch for a new set of requests
@@ -20253,7 +20227,7 @@ jQuery.extend( {
 			if ( s.data && ( s.processData || typeof s.data === "string" ) ) {
 				cacheURL += ( rquery.test( cacheURL ) ? "&" : "?" ) + s.data;
 
-				// #9682: remove data so that it's not used in an eventual retry
+				// trac-9682: remove data so that it's not used in an eventual retry
 				delete s.data;
 			}
 
@@ -20526,7 +20500,7 @@ jQuery._evalUrl = function( url, options, doc ) {
 	return jQuery.ajax( {
 		url: url,
 
-		// Make this explicit, since user can override this through ajaxSetup (#11264)
+		// Make this explicit, since user can override this through ajaxSetup (trac-11264)
 		type: "GET",
 		dataType: "script",
 		cache: true,
@@ -20635,7 +20609,7 @@ var xhrSuccessStatus = {
 		0: 200,
 
 		// Support: IE <=9 only
-		// #1450: sometimes IE returns 1223 when it should be 204
+		// trac-1450: sometimes IE returns 1223 when it should be 204
 		1223: 204
 	},
 	xhrSupported = jQuery.ajaxSettings.xhr();
@@ -20707,7 +20681,7 @@ jQuery.ajaxTransport( function( options ) {
 								} else {
 									complete(
 
-										// File: protocol always yields status 0; see #8605, #14207
+										// File: protocol always yields status 0; see trac-8605, trac-14207
 										xhr.status,
 										xhr.statusText
 									);
@@ -20768,7 +20742,7 @@ jQuery.ajaxTransport( function( options ) {
 					xhr.send( options.hasContent && options.data || null );
 				} catch ( e ) {
 
-					// #14683: Only rethrow if this hasn't been notified as an error yet
+					// trac-14683: Only rethrow if this hasn't been notified as an error yet
 					if ( callback ) {
 						throw e;
 					}
@@ -21412,7 +21386,9 @@ jQuery.each(
 
 // Support: Android <=4.0 only
 // Make sure we trim BOM and NBSP
-var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+// Require that the "whitespace run" starts from a non-whitespace
+// to avoid O(N^2) behavior when the engine would try matching "\s+$" at each space position.
+var rtrim = /^[\s\uFEFF\xA0]+|([^\s\uFEFF\xA0])[\s\uFEFF\xA0]+$/g;
 
 // Bind a function to a context, optionally partially applying any
 // arguments.
@@ -21479,7 +21455,7 @@ jQuery.isNumeric = function( obj ) {
 jQuery.trim = function( text ) {
 	return text == null ?
 		"" :
-		( text + "" ).replace( rtrim, "" );
+		( text + "" ).replace( rtrim, "$1" );
 };
 
 
@@ -21528,8 +21504,8 @@ jQuery.noConflict = function( deep ) {
 };
 
 // Expose jQuery and $ identifiers, even in AMD
-// (#7102#comment:10, https://github.com/jquery/jquery/pull/557)
-// and CommonJS for browser emulators (#13566)
+// (trac-7102#comment:10, https://github.com/jquery/jquery/pull/557)
+// and CommonJS for browser emulators (trac-13566)
 if ( typeof noGlobal === "undefined" ) {
 	window.jQuery = window.$ = jQuery;
 }
@@ -48168,7 +48144,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(__vue_component__.name, __v
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*!
- * Vue.js v2.7.9
+ * Vue.js v2.7.14
  * (c) 2014-2022 Evan You
  * Released under the MIT License.
  */
@@ -48282,7 +48258,13 @@ const isReservedAttribute = makeMap('key,ref,slot,slot-scope,is');
  * Remove an item from an array.
  */
 function remove$2(arr, item) {
-    if (arr.length) {
+    const len = arr.length;
+    if (len) {
+        // fast path for the only / last item
+        if (item === arr[len - 1]) {
+            arr.length = len - 1;
+            return;
+        }
         const index = arr.indexOf(item);
         if (index > -1) {
             return arr.splice(index, 1);
@@ -48877,6 +48859,15 @@ let initProxy;
 }
 
 let uid$2 = 0;
+const pendingCleanupDeps = [];
+const cleanupDeps = () => {
+    for (let i = 0; i < pendingCleanupDeps.length; i++) {
+        const dep = pendingCleanupDeps[i];
+        dep.subs = dep.subs.filter(s => s);
+        dep._pending = false;
+    }
+    pendingCleanupDeps.length = 0;
+};
 /**
  * A dep is an observable that can have multiple
  * directives subscribing to it.
@@ -48884,6 +48875,8 @@ let uid$2 = 0;
  */
 class Dep {
     constructor() {
+        // pending subs cleanup
+        this._pending = false;
         this.id = uid$2++;
         this.subs = [];
     }
@@ -48891,7 +48884,15 @@ class Dep {
         this.subs.push(sub);
     }
     removeSub(sub) {
-        remove$2(this.subs, sub);
+        // #12696 deps with massive amount of subscribers are extremely slow to
+        // clean up in Chromium
+        // to workaround this, we unset the sub for now, and clear them on
+        // next scheduler flush.
+        this.subs[this.subs.indexOf(sub)] = null;
+        if (!this._pending) {
+            this._pending = true;
+            pendingCleanupDeps.push(this);
+        }
     }
     depend(info) {
         if (Dep.target) {
@@ -48903,7 +48904,7 @@ class Dep {
     }
     notify(info) {
         // stabilize the subscriber list first
-        const subs = this.subs.slice();
+        const subs = this.subs.filter(s => s);
         if (!config.async) {
             // subs aren't sorted in scheduler if not running async
             // we need to sort them now to make sure they fire in correct
@@ -48911,12 +48912,12 @@ class Dep {
             subs.sort((a, b) => a.id - b.id);
         }
         for (let i = 0, l = subs.length; i < l; i++) {
+            const sub = subs[i];
             if (info) {
-                const sub = subs[i];
                 sub.onTrigger &&
                     sub.onTrigger(Object.assign({ effect: subs[i] }, info));
             }
-            subs[i].update();
+            sub.update();
         }
     }
 }
@@ -49060,21 +49061,18 @@ class Observer {
  * or the existing observer if the value already has one.
  */
 function observe(value, shallow, ssrMockReactivity) {
-    if (!isObject(value) || isRef(value) || value instanceof VNode) {
-        return;
+    if (value && hasOwn(value, '__ob__') && value.__ob__ instanceof Observer) {
+        return value.__ob__;
     }
-    let ob;
-    if (hasOwn(value, '__ob__') && value.__ob__ instanceof Observer) {
-        ob = value.__ob__;
-    }
-    else if (shouldObserve &&
+    if (shouldObserve &&
         (ssrMockReactivity || !isServerRendering()) &&
         (isArray(value) || isPlainObject(value)) &&
         Object.isExtensible(value) &&
-        !value.__v_skip /* ReactiveFlags.SKIP */) {
-        ob = new Observer(value, shallow, ssrMockReactivity);
+        !value.__v_skip /* ReactiveFlags.SKIP */ &&
+        !isRef(value) &&
+        !(value instanceof VNode)) {
+        return new Observer(value, shallow, ssrMockReactivity);
     }
-    return ob;
 }
 /**
  * Define a reactive property on an Object.
@@ -49300,7 +49298,10 @@ function toRaw(observed) {
     return raw ? toRaw(raw) : observed;
 }
 function markRaw(value) {
-    def(value, "__v_skip" /* ReactiveFlags.SKIP */, true);
+    // non-extensible objects won't be observed anyway
+    if (Object.isExtensible(value)) {
+        def(value, "__v_skip" /* ReactiveFlags.SKIP */, true);
+    }
     return value;
 }
 /**
@@ -49465,6 +49466,9 @@ function createReadonly(target, shallow) {
             }
         }
         return target;
+    }
+    if (!Object.isExtensible(target)) {
+        warn$2(`Vue 2 does not support creating readonly proxy for non-extensible object.`);
     }
     // already a readonly object
     if (isReadonly(target)) {
@@ -50940,8 +50944,13 @@ function lifecycleMixin(Vue) {
             vm.$el.__vue__ = vm;
         }
         // if parent is an HOC, update its $el as well
-        if (vm.$vnode && vm.$parent && vm.$vnode === vm.$parent._vnode) {
-            vm.$parent.$el = vm.$el;
+        let wrapper = vm;
+        while (wrapper &&
+            wrapper.$vnode &&
+            wrapper.$parent &&
+            wrapper.$vnode === wrapper.$parent._vnode) {
+            wrapper.$parent.$el = wrapper.$el;
+            wrapper = wrapper.$parent;
         }
         // updated hook is called by the scheduler to ensure that children are
         // updated in a parent's updated hook.
@@ -51295,6 +51304,7 @@ function flushSchedulerQueue() {
     // call component updated and activated hooks
     callActivatedHooks(activatedQueue);
     callUpdatedHooks(updatedQueue);
+    cleanupDeps();
     // devtool hook
     /* istanbul ignore if */
     if (devtools && config.devtools) {
@@ -51571,6 +51581,7 @@ function doWatch(source, cb, { immediate, deep, flush = 'pre', onTrack, onTrigge
 let activeEffectScope;
 class EffectScope {
     constructor(detached = false) {
+        this.detached = detached;
         /**
          * @internal
          */
@@ -51583,8 +51594,8 @@ class EffectScope {
          * @internal
          */
         this.cleanups = [];
+        this.parent = activeEffectScope;
         if (!detached && activeEffectScope) {
-            this.parent = activeEffectScope;
             this.index =
                 (activeEffectScope.scopes || (activeEffectScope.scopes = [])).push(this) - 1;
         }
@@ -51633,7 +51644,7 @@ class EffectScope {
                 }
             }
             // nested scope, dereference from parent to avoid memory leaks
-            if (this.parent && !fromParent) {
+            if (!this.detached && this.parent && !fromParent) {
                 // optimized O(1) removal
                 const last = this.parent.scopes.pop();
                 if (last && last !== this) {
@@ -51641,6 +51652,7 @@ class EffectScope {
                     last.index = this.index;
                 }
             }
+            this.parent = undefined;
             this.active = false;
         }
     }
@@ -52068,7 +52080,7 @@ function onErrorCaptured(hook, target = currentInstance) {
 /**
  * Note: also update dist/vue.runtime.mjs when adding new exports to this file.
  */
-const version = '2.7.9';
+const version = '2.7.14';
 /**
  * @internal type is manually declared in <root>/types/v3-define-component.d.ts
  */
@@ -52151,6 +52163,7 @@ function _traverse(val, seen) {
     let i, keys;
     const isA = isArray(val);
     if ((!isA && !isObject(val)) ||
+        val.__v_skip /* ReactiveFlags.SKIP */ ||
         Object.isFrozen(val) ||
         val instanceof VNode) {
         return;
@@ -53257,7 +53270,7 @@ const strats = config.optionMergeStrategies;
 /**
  * Helper that recursively merges two data objects together.
  */
-function mergeData(to, from) {
+function mergeData(to, from, recursive = true) {
     if (!from)
         return to;
     let key, toVal, fromVal;
@@ -53271,7 +53284,7 @@ function mergeData(to, from) {
             continue;
         toVal = to[key];
         fromVal = from[key];
-        if (!hasOwn(to, key)) {
+        if (!recursive || !hasOwn(to, key)) {
             set(to, key, fromVal);
         }
         else if (toVal !== fromVal &&
@@ -53431,7 +53444,19 @@ strats.props =
                         extend(ret, childVal);
                     return ret;
                 };
-strats.provide = mergeDataOrFn;
+strats.provide = function (parentVal, childVal) {
+    if (!parentVal)
+        return childVal;
+    return function () {
+        const ret = Object.create(null);
+        mergeData(ret, isFunction(parentVal) ? parentVal.call(this) : parentVal);
+        if (childVal) {
+            mergeData(ret, isFunction(childVal) ? childVal.call(this) : childVal, false // non-recursive
+            );
+        }
+        return ret;
+    };
+};
 /**
  * Default strategy.
  */
@@ -59156,7 +59181,7 @@ function genFor(el, state, altGen, altHelper) {
         !el.key) {
         state.warn(`<${el.tag} v-for="${alias} in ${exp}">: component lists rendered with ` +
             `v-for should have explicit keys. ` +
-            `See https://vuejs.org/guide/list.html#key for more info.`, el.rawAttrsMap['v-for'], true /* tip */);
+            `See https://v2.vuejs.org/v2/guide/list.html#key for more info.`, el.rawAttrsMap['v-for'], true /* tip */);
     }
     el.forProcessed = true; // avoid recursion
     return (`${altHelper || '_l'}((${exp}),` +
@@ -62558,15 +62583,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lang.js */ "./node_modules/lang.js/src/lang.js");
 /* harmony import */ var lang_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lang_js__WEBPACK_IMPORTED_MODULE_0__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-
 __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
+
 /**
  * Loading Adapters
  */
-
-
 __webpack_require__(/*! ./adapters/ToastAdapter */ "./resources/js/adapters/ToastAdapter.js");
-
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
 window.translate = new lang_js__WEBPACK_IMPORTED_MODULE_0___default.a({
@@ -62575,24 +62597,21 @@ window.translate = new lang_js__WEBPACK_IMPORTED_MODULE_0___default.a({
   fallback: App.fallbackLocale
 });
 Vue.prototype.trans = window.translate;
+
 /**
  * Auto loading components
  */
-
 var files = __webpack_require__("./resources/js sync recursive \\.vue$/");
-
 files.keys().map(function (key) {
   return Vue.component(key.split('/').pop().split('.')[0], files(key)["default"]);
 });
 var app = new Vue({
   el: '#app'
 });
-
 window.onload = function () {
   if (App.messages.success) {
     toast.success(App.messages.success);
   }
-
   if (App.messages.errors && App.messages.errors.length) {
     App.messages.errors.forEach(function (error) {
       return toast.error(error);
@@ -62610,6 +62629,7 @@ window.onload = function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This
@@ -62619,27 +62639,29 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 try {
   window.Popper = __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js")["default"];
   window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-
   __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
-
   window.bootbox = __webpack_require__(/*! bootbox */ "./node_modules/bootbox/bootbox.all.js");
 } catch (e) {}
+
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
  * allows your team to easily build robust real-time web applications.
  */
+
 // import Echo from 'laravel-echo';
+
 // window.Pusher = require('pusher-js');
+
 // window.Echo = new Echo({
 //     broadcaster: 'pusher',
 //     key: process.env.MIX_PUSHER_APP_KEY,
@@ -63077,7 +63099,6 @@ window.treatAxiosError = function (error) {
   if (error.response) {
     var data = error.response.data;
     var errors = data.errors;
-
     if (errors) {
       for (var key in errors) {
         toast.error(errors[key][0]);
@@ -63087,12 +63108,10 @@ window.treatAxiosError = function (error) {
     }
   }
 };
-
 window.formatMoney = function (amount) {
   var decimalCount = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
   var decimal = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : ".";
   var thousands = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : ",";
-
   try {
     decimalCount = Math.abs(decimalCount);
     decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
