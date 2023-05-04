@@ -1141,7 +1141,7 @@ export default {
                 currencySettings.thousands_separator = '';
             }
 
-            //console.log(currencySettings.thousands_separator);
+            console.log(currencySettings.thousands_separator);
 
             return currencySettings.symbol + ' ' + formatMoney(
                 price, 2,
