@@ -2197,6 +2197,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      loggedUserID: document.querySelector("meta[name='user-id']").getAttribute('content'),
       saving: false,
       sections: [],
       estimateData: null
@@ -2220,12 +2221,30 @@ __webpack_require__.r(__webpack_exports__);
     init: function init() {
       this.getEstimate();
     },
+    getloggedUser: function getloggedUser(url) {
+      //console.log(this.loggedUserID);
+      axios.put(url, {
+        name: this.estimateData.name,
+        use_name_as_title: this.estimateData.use_name_as_title,
+        sections_positions: this.calculateSectionsPositions(),
+        currency_symbol: this.estimateData.currency_settings.symbol,
+        currency_decimal_separator: this.estimateData.currency_settings.decimal_separator,
+        currency_thousands_separator: this.estimateData.currency_settings.thousands_separator,
+        tags: this.estimateData.tags,
+        updated_by: this.loggedUserID
+      }).then(function (_ref) {
+        var data = _ref.data;
+        console.log('');
+      })["catch"](function (error) {
+        console.log("ERRRR:: ", error.response.data);
+      });
+    },
     getEstimate: function getEstimate() {
       var _this = this;
       var url = '/estimates/:estimate/data';
       url = url.replace(':estimate', this.estimate);
-      axios.get(url).then(function (_ref) {
-        var data = _ref.data;
+      axios.get(url).then(function (_ref2) {
+        var data = _ref2.data;
         _this.estimateData = data;
         _this.getSections();
       });
@@ -2234,13 +2253,16 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
       var url = '/estimates/:estimate/sections';
       url = url.replace(':estimate', this.estimate);
-      axios.get(url).then(function (_ref2) {
-        var data = _ref2.data;
+      axios.get(url).then(function (_ref3) {
+        var data = _ref3.data;
         _this2.sections = data;
       });
     },
     addSection: function addSection() {
       var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'text';
+      var url = '/estimates/:estimate/sections';
+      url = url.replace(':estimate', this.estimate);
+      //getloggedUser(url);
       this.sections.push({
         'id': null,
         'text': '',
@@ -2259,12 +2281,18 @@ __webpack_require__.r(__webpack_exports__);
       }, 500);
     },
     updateSection: function updateSection(sectionData, index) {
+      var url = '/estimates/:estimate/sections';
+      url = url.replace(':estimate', this.estimate);
+      //getloggedUser(url);
       this.$set(this.sections, index, sectionData);
       var total = this.sections.reduce(function (sum, section) {
         return sum + parseFloat(section.total || 0);
       }, 0);
     },
     removeSection: function removeSection(index, type) {
+      var url = '/estimates/:estimate/sections';
+      url = url.replace(':estimate', this.estimate);
+      //getloggedUser(url);
       this.sections.splice(index, 1);
     },
     updateDebounced: _.debounce(function () {
@@ -2276,6 +2304,8 @@ __webpack_require__.r(__webpack_exports__);
     update: function update() {
       var url = '/estimates/:estimate';
       url = url.replace(':estimate', this.estimate);
+
+      //console.log(url);
       axios.put(url, {
         name: this.estimateData.name,
         use_name_as_title: this.estimateData.use_name_as_title,
@@ -2286,6 +2316,8 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (data) {
         toast.success('Estimate saved successfully');
       });
+
+      //this.getloggedUser(url);
     },
     calculateSectionsPositions: function calculateSectionsPositions() {
       var positions = {};
@@ -2390,6 +2422,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     formattedPrice: function formattedPrice(price) {
       var currencySettings = this.estimateData.currency_settings;
+
+      //console.log(currencySettings.thousands_separator);
+
+      if (currencySettings.thousands_separator == null || currencySettings.thousands_separator == '') {
+        currencySettings.thousands_separator = '';
+      }
+      console.log(currencySettings.thousands_separator);
       return currencySettings.symbol + ' ' + formatMoney(price, 2, currencySettings.decimal_separator, currencySettings.thousands_separator).toString();
     },
     renderPrices: function renderPrices() {
@@ -2784,7 +2823,7 @@ var render = function render() {
   }), _vm._v(" "), _c("span", {
     staticClass: "slider round"
   })]), _vm._v("\n                " + _vm._s(_vm.trans.get("app.use_name_as_title")) + "\n            ")])]), _vm._v(" "), _c("div", {
-    staticClass: "form-group col-md-4"
+    staticClass: "form-group col-md-2"
   }, [_c("label", {
     attrs: {
       "for": "currency_symbol"
@@ -2812,7 +2851,7 @@ var render = function render() {
       }]
     }
   })]), _vm._v(" "), _c("div", {
-    staticClass: "form-group col-md-4"
+    staticClass: "form-group col-md-2"
   }, [_c("label", {
     attrs: {
       "for": "currency_decimal_separator"
@@ -2840,7 +2879,7 @@ var render = function render() {
       }]
     }
   })]), _vm._v(" "), _c("div", {
-    staticClass: "form-group col-md-4"
+    staticClass: "form-group col-md-2"
   }, [_c("label", {
     attrs: {
       "for": "currency_thousands_separator"
@@ -2868,6 +2907,36 @@ var render = function render() {
       }]
     }
   })]), _vm._v(" "), _c("div", {
+    staticClass: "form-group col-md-6"
+  }, [_c("label", {
+    attrs: {
+      "for": "estimate_tags"
+    }
+  }, [_vm._v(_vm._s(_vm.trans.get("app.estimate_tags")))]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.estimateData.tags,
+      expression: "estimateData.tags"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text"
+    },
+    domProps: {
+      value: _vm.estimateData.tags
+    },
+    on: {
+      input: [function ($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.estimateData, "tags", $event.target.value);
+      }, function ($event) {
+        return _vm.updateDebounced();
+      }]
+    }
+  }), _vm._v(" "), _c("p", {
+    staticClass: "tip-label"
+  }, [_vm._v(_vm._s(_vm.trans.get("app.estimate_tags_tip")))])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12 text-right"
   }, [_c("div", {
     staticClass: "total-viewer"
@@ -10447,7 +10516,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.total-viewer[data-v-405261a6] {\n    display: inline-block;\n    align-items: center;\n    background: #eee;\n    border: 1px solid #ccc;\n    padding: 1.3em;\n}\n.total-viewer h3[data-v-405261a6] {\n    margin: 0px;\n}\n", ""]);
+exports.push([module.i, "\n.total-viewer[data-v-405261a6] {\n    display: inline-block;\n    align-items: center;\n    background: #eee;\n    border: 1px solid #ccc;\n    padding: 1.3em;\n}\n.total-viewer h3[data-v-405261a6] {\n    margin: 0px;\n}\n.tip-label[data-v-405261a6] {\n    font-size: 14px;\n    font-style: italic;\n    color: rgb(146, 146, 146);\n    padding-left: 5px;\n}\n\n", ""]);
 
 // exports
 
@@ -10606,7 +10675,7 @@ function toComment(sourceMap) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
- * jQuery JavaScript Library v3.6.1
+ * jQuery JavaScript Library v3.6.4
  * https://jquery.com/
  *
  * Includes Sizzle.js
@@ -10616,7 +10685,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
  * Released under the MIT license
  * https://jquery.org/license
  *
- * Date: 2022-08-26T17:52Z
+ * Date: 2023-03-08T15:28Z
  */
 ( function( global, factory ) {
 
@@ -10758,7 +10827,7 @@ function toType( obj ) {
 
 
 var
-	version = "3.6.1",
+	version = "3.6.4",
 
 	// Define a local copy of jQuery
 	jQuery = function( selector, context ) {
@@ -11129,14 +11198,14 @@ function isArrayLike( obj ) {
 }
 var Sizzle =
 /*!
- * Sizzle CSS Selector Engine v2.3.6
+ * Sizzle CSS Selector Engine v2.3.10
  * https://sizzlejs.com/
  *
  * Copyright JS Foundation and other contributors
  * Released under the MIT license
  * https://js.foundation/
  *
- * Date: 2021-02-16
+ * Date: 2023-02-14
  */
 ( function( window ) {
 var i,
@@ -11240,7 +11309,7 @@ var i,
 		whitespace + "+$", "g" ),
 
 	rcomma = new RegExp( "^" + whitespace + "*," + whitespace + "*" ),
-	rcombinators = new RegExp( "^" + whitespace + "*([>+~]|" + whitespace + ")" + whitespace +
+	rleadingCombinator = new RegExp( "^" + whitespace + "*([>+~]|" + whitespace + ")" + whitespace +
 		"*" ),
 	rdescend = new RegExp( whitespace + "|>" ),
 
@@ -11457,7 +11526,7 @@ function Sizzle( selector, context, results, seed ) {
 				// as such selectors are not recognized by querySelectorAll.
 				// Thanks to Andrew Dupont for this technique.
 				if ( nodeType === 1 &&
-					( rdescend.test( selector ) || rcombinators.test( selector ) ) ) {
+					( rdescend.test( selector ) || rleadingCombinator.test( selector ) ) ) {
 
 					// Expand context for sibling selectors
 					newContext = rsibling.test( selector ) && testContext( context.parentNode ) ||
@@ -11781,6 +11850,24 @@ setDocument = Sizzle.setDocument = function( node ) {
 			!el.querySelectorAll( ":scope fieldset div" ).length;
 	} );
 
+	// Support: Chrome 105 - 110+, Safari 15.4 - 16.3+
+	// Make sure the the `:has()` argument is parsed unforgivingly.
+	// We include `*` in the test to detect buggy implementations that are
+	// _selectively_ forgiving (specifically when the list includes at least
+	// one valid selector).
+	// Note that we treat complete lack of support for `:has()` as if it were
+	// spec-compliant support, which is fine because use of `:has()` in such
+	// environments will fail in the qSA path and fall back to jQuery traversal
+	// anyway.
+	support.cssHas = assert( function() {
+		try {
+			document.querySelector( ":has(*,:jqfake)" );
+			return false;
+		} catch ( e ) {
+			return true;
+		}
+	} );
+
 	/* Attributes
 	---------------------------------------------------------------------- */
 
@@ -12047,6 +12134,17 @@ setDocument = Sizzle.setDocument = function( node ) {
 		} );
 	}
 
+	if ( !support.cssHas ) {
+
+		// Support: Chrome 105 - 110+, Safari 15.4 - 16.3+
+		// Our regular `try-catch` mechanism fails to detect natively-unsupported
+		// pseudo-classes inside `:has()` (such as `:has(:contains("Foo"))`)
+		// in browsers that parse the `:has()` argument as a forgiving selector list.
+		// https://drafts.csswg.org/selectors/#relational now requires the argument
+		// to be parsed unforgivingly, but browsers have not yet fully adjusted.
+		rbuggyQSA.push( ":has" );
+	}
+
 	rbuggyQSA = rbuggyQSA.length && new RegExp( rbuggyQSA.join( "|" ) );
 	rbuggyMatches = rbuggyMatches.length && new RegExp( rbuggyMatches.join( "|" ) );
 
@@ -12059,7 +12157,14 @@ setDocument = Sizzle.setDocument = function( node ) {
 	// As in, an element does not contain itself
 	contains = hasCompare || rnative.test( docElem.contains ) ?
 		function( a, b ) {
-			var adown = a.nodeType === 9 ? a.documentElement : a,
+
+			// Support: IE <9 only
+			// IE doesn't have `contains` on `document` so we need to check for
+			// `documentElement` presence.
+			// We need to fall back to `a` when `documentElement` is missing
+			// as `ownerDocument` of elements within `<template/>` may have
+			// a null one - a default behavior of all modern browsers.
+			var adown = a.nodeType === 9 && a.documentElement || a,
 				bup = b && b.parentNode;
 			return a === bup || !!( bup && bup.nodeType === 1 && (
 				adown.contains ?
@@ -12849,7 +12954,7 @@ Expr = Sizzle.selectors = {
 			return elem.nodeName.toLowerCase() === "input" &&
 				elem.type === "text" &&
 
-				// Support: IE<8
+				// Support: IE <10 only
 				// New HTML5 attribute values (e.g., "search") appear with elem.type === "text"
 				( ( attr = elem.getAttribute( "type" ) ) == null ||
 					attr.toLowerCase() === "text" );
@@ -12949,7 +13054,7 @@ tokenize = Sizzle.tokenize = function( selector, parseOnly ) {
 		matched = false;
 
 		// Combinators
-		if ( ( match = rcombinators.exec( soFar ) ) ) {
+		if ( ( match = rleadingCombinator.exec( soFar ) ) ) {
 			matched = match.shift();
 			tokens.push( {
 				value: matched,
@@ -17215,17 +17320,37 @@ function curCSS( elem, name, computed ) {
 	//   .css('filter') (IE 9 only, trac-12537)
 	//   .css('--customProperty) (gh-3144)
 	if ( computed ) {
+
+		// Support: IE <=9 - 11+
+		// IE only supports `"float"` in `getPropertyValue`; in computed styles
+		// it's only available as `"cssFloat"`. We no longer modify properties
+		// sent to `.css()` apart from camelCasing, so we need to check both.
+		// Normally, this would create difference in behavior: if
+		// `getPropertyValue` returns an empty string, the value returned
+		// by `.css()` would be `undefined`. This is usually the case for
+		// disconnected elements. However, in IE even disconnected elements
+		// with no styles return `"none"` for `getPropertyValue( "float" )`
 		ret = computed.getPropertyValue( name ) || computed[ name ];
 
-		// trim whitespace for custom property (issue gh-4926)
-		if ( isCustomProp ) {
+		if ( isCustomProp && ret ) {
 
-			// rtrim treats U+000D CARRIAGE RETURN and U+000C FORM FEED
+			// Support: Firefox 105+, Chrome <=105+
+			// Spec requires trimming whitespace for custom properties (gh-4926).
+			// Firefox only trims leading whitespace. Chrome just collapses
+			// both leading & trailing whitespace to a single space.
+			//
+			// Fall back to `undefined` if empty string returned.
+			// This collapses a missing definition with property defined
+			// and set to an empty string but there's no standard API
+			// allowing us to differentiate them without a performance penalty
+			// and returning `undefined` aligns with older jQuery.
+			//
+			// rtrimCSS treats U+000D CARRIAGE RETURN and U+000C FORM FEED
 			// as whitespace while CSS does not, but this is not a problem
 			// because CSS preprocessing replaces them with U+000A LINE FEED
 			// (which *is* CSS whitespace)
 			// https://www.w3.org/TR/css-syntax-3/#input-preprocessing
-			ret = ret.replace( rtrimCSS, "$1" );
+			ret = ret.replace( rtrimCSS, "$1" ) || undefined;
 		}
 
 		if ( ret === "" && !isAttached( elem ) ) {
