@@ -21,6 +21,12 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
+
+    <!-- Auth User -->
+    @if (Auth::check()) 
+        <meta name="user-id" content="{{ Auth::user()->id }}">
+    @endif 
+
     @include('layouts.app-data')
 </head>
 <body>
