@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use KgBot\LaravelLocalization\Facades\ExportLocalizations;
@@ -25,6 +26,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        Paginator::useBootstrap();
+        
         $localizationData = ExportLocalizations::export()->toFlat();
 
         View::composer('layouts.app', function ($view) use ($localizationData) {  

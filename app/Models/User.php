@@ -42,4 +42,8 @@ class User extends Authenticatable
 
     protected $searchableFields = ['name', 'email'];
 
+    public function estimates(){
+
+        return $this->hasManyThrough(Estimate::class, User::class);
+    }
 }

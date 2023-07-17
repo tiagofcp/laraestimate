@@ -10,6 +10,14 @@
     .total-viewer h3 {
         margin: 0px;
     }
+
+    .tip-label {
+        font-size: 14px;
+        font-style: italic;
+        color: rgb(146, 146, 146);
+        padding-left: 5px;
+    }
+
 </style>
 <template>
     <div>
@@ -29,19 +37,25 @@
                 </div>
             </div>
 
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-2">
                 <label for="currency_symbol">{{ trans.get('app.currency_symbol') }}</label>
                 <input type="text" class="form-control" v-model="estimateData.currency_settings.symbol" @input="updateDebounced()">
             </div>
 
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-2">
                 <label for="currency_decimal_separator">{{ trans.get('app.currency_decimal_separator') }}</label>
                 <input type="text" class="form-control" v-model="estimateData.currency_settings.decimal_separator" @input="updateDebounced()">
             </div>
 
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-2">
                 <label for="currency_thousands_separator">{{ trans.get('app.currency_thousands_separator') }}</label>
                 <input type="text" class="form-control" v-model="estimateData.currency_settings.thousands_separator" @input="updateDebounced()">
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="estimate_tags">{{ trans.get('app.estimate_tags') }}</label>
+                <input type="text" class="form-control" v-model="estimateData.tags" @input="updateDebounced()">
+                <p class="tip-label">{{ trans.get('app.estimate_tags_tip') }}</p>
             </div>
 
             <div class="col-md-12 text-right">
@@ -91,6 +105,7 @@ export default {
     
     data() {
         return {
+            loggedUserID : document.querySelector("meta[name='user-id']").getAttribute('content'),
             saving: false,
             sections: [],
             estimateData: null,
@@ -121,6 +136,26 @@ export default {
             this.getEstimate();
         },
 
+        getloggedUser(url){
+
+            //console.log(this.loggedUserID);
+            axios.put(url, {
+                name: this.estimateData.name,
+                use_name_as_title: this.estimateData.use_name_as_title,
+                sections_positions: this.calculateSectionsPositions(),
+                currency_symbol: this.estimateData.currency_settings.symbol,
+                currency_decimal_separator: this.estimateData.currency_settings.decimal_separator,
+                currency_thousands_separator: this.estimateData.currency_settings.thousands_separator,
+                tags: this.estimateData.tags,
+                updated_by: this.loggedUserID,
+            }).then(({data}) => {
+                console.log('');
+            }).catch(error => {
+                console.log("ERRRR:: ",error.response.data);
+
+            });
+        },
+
         getEstimate() {
             let url = '/estimates/:estimate/data';
             url = url.replace(':estimate', this.estimate);
@@ -143,6 +178,9 @@ export default {
         },
 
         addSection(type = 'text') {
+            let url = '/estimates/:estimate/sections';
+            url = url.replace(':estimate', this.estimate);
+            //getloggedUser(url);
             this.sections.push({
                 'id': null,
                 'text': '',
@@ -163,6 +201,9 @@ export default {
         },
 
         updateSection(sectionData, index) {
+            let url = '/estimates/:estimate/sections';
+            url = url.replace(':estimate', this.estimate);
+            //getloggedUser(url);
             this.$set(this.sections, index, sectionData);
             
             let total = this.sections.reduce((sum, section) => {
@@ -171,6 +212,9 @@ export default {
         },
 
         removeSection(index, type) {
+            let url = '/estimates/:estimate/sections';
+            url = url.replace(':estimate', this.estimate);
+            //getloggedUser(url);
             this.sections.splice(index, 1);
         },
 
@@ -183,9 +227,11 @@ export default {
         },
 
         update() {
+
             let url = '/estimates/:estimate';
             url = url.replace(':estimate', this.estimate);
-
+            
+            //console.log(url);
             axios.put(url, {
                 name: this.estimateData.name,
                 use_name_as_title: this.estimateData.use_name_as_title,
@@ -195,7 +241,10 @@ export default {
                 currency_thousands_separator: this.estimateData.currency_settings.thousands_separator,
             }).then(data => {
                 toast.success('Estimate saved successfully');
+  
             });
+
+            //this.getloggedUser(url);
         },
 
         calculateSectionsPositions() {

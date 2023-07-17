@@ -20,7 +20,10 @@ class Estimate extends Model
         'currency_decimal_separator',
         'currency_thousands_separator',
         'allows_to_select_items',
+        'tags',
         'password',
+        'created_by',
+        'updated_by',
     ];
 
     protected $appends = [
@@ -40,6 +43,11 @@ class Estimate extends Model
     public function items()
     {
         return $this->hasManyThrough(Item::class, Section::class);
+    }
+
+    public function user(){
+
+        return $this->belongsTo(User::class);
     }
 
     public function scopeSearch($query, $search)

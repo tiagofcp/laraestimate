@@ -33,6 +33,8 @@ return [
     'add_item' => 'Adicionar Item',
     'add_text_section' => 'Adicionar Secção de Texto',
     'add_prices_section' => 'Adicionar Secção de Preços',
+    'estimate_tags' => 'Etiquetas',
+    'estimate_tags_tip' => 'Separe as etiquetas com vírgulas',
 
     'sending_email' => 'A Enviar E-mail...',
     'share_estimate' => 'Compartilhar Orçamento',

@@ -6744,8 +6744,7 @@ a.close.disabled {
   float: left;
   width: 100%;
   margin-right: -100%;
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
+  backface-visibility: hidden;
   transition: transform 0.6s ease-in-out;
 }
 
@@ -12124,7 +12123,6 @@ input:checked + .slider:before {
 }
 
 .animated.flip {
-  -webkit-backface-visibility: visible;
   backface-visibility: visible;
   animation-name: flip;
 }
@@ -12156,7 +12154,6 @@ input:checked + .slider:before {
 }
 
 .flipInX {
-  -webkit-backface-visibility: visible !important;
   backface-visibility: visible !important;
   animation-name: flipInX;
 }
@@ -12188,7 +12185,6 @@ input:checked + .slider:before {
 }
 
 .flipInY {
-  -webkit-backface-visibility: visible !important;
   backface-visibility: visible !important;
   animation-name: flipInY;
 }
@@ -12212,7 +12208,6 @@ input:checked + .slider:before {
 .flipOutX {
   animation-duration: 0.75s;
   animation-name: flipOutX;
-  -webkit-backface-visibility: visible !important;
   backface-visibility: visible !important;
 }
 
@@ -12234,7 +12229,6 @@ input:checked + .slider:before {
 
 .flipOutY {
   animation-duration: 0.75s;
-  -webkit-backface-visibility: visible !important;
   backface-visibility: visible !important;
   animation-name: flipOutY;
 }
